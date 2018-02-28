@@ -17,6 +17,11 @@ Route::get('/', function () {
 
 Route::get('/events', 'EventController@index');
 Route::get('/events/create', 'EventController@create')->middleware('provider');
+Route::get('/events/search', function() {
+  return view('FullTextSearch');
+});
+
+Route::post('/events/search', 'EventController@search');
 Route::get('/events/{event}', 'EventController@show');
 
 Route::post('/events', 'EventController@store');

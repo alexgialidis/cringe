@@ -28,8 +28,7 @@
                 <div class="title m-b-md">
                     Cringe
                 </div>
-
-            </div>
+            </div>       
         </div>
 
-@endsenction
+@endsection
