@@ -1,35 +1,10 @@
-@extends ('layout')
-
+@extends('layout')
 
 @section ('content')
+ 
 
-@if (Auth::guard('human')->user())
-<h1>hhhhhhhhhhhhhhhhhhhhhhhhh</h1>
-@endif
-
-<div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-    <div class="top-right links">
-        @auth
-        <a href="{{ url('/home') }}">Home</a>
-        @else
-        <a href="{{ route('login') }}">Login</a>
-        <!-- <a href="{{ route('register') }}">Register</a> -->
-
-
-        <div class="dropdown" style="float:right;">
-          <button class="dropbtn">Register</button>
-          <div class="dropdown-content">
-            <a href="{{ url('/provider/register') }}">Provider</a>
-            <a href="{{ url('/human/register') }}">Parent</a>
-        </div>
-    </div>
-    @endauth
-</div>
-@endif
-
-<div class="content">
-    <div class="title m-b-md">
+<div class="content col-md-6 col-md-offset-3 vcenter ertical-center">
+    <div class="title m-b-md" style="font-weight: 100">
         Cringe
     </div>
 
@@ -42,9 +17,4 @@
         </div>
     </form> 
 </div>
-
-
-
-</div>
-
 @endsection
