@@ -3,10 +3,6 @@
 
 @section ('content')
 
-@if (Auth::guard('human')->user())
-<h1>hhhhhhhhhhhhhhhhhhhhhhhhh</h1>
-@endif
-
 <div class="flex-center position-ref full-height">
     @if (Route::has('login'))
     <div class="top-right links">
