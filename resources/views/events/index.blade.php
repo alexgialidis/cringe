@@ -1,109 +1,71 @@
 @extends ('layout')
 
 @section ('content')
-  <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxSPW5CJgpdgO_s4yyMovOaVh_KvvhSfpvagV18eOyDWu7VytS6Bi1CWxw"
-  type="text/javascript"></script>
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+type="text/javascript"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script type="text/javascript">
-        var map = null;
-        var geocoder = null;
+<script>
 
+      // The following example creates a marker in Stockholm, Sweden using a DROP
+      // animation. Clicking on the marker will toggle the animation between a BOUNCE
+      // animation and no animation.
 
-        function showAddress(address) {
-          if (geocoder) {
-            geocoder.getLatLng(
-              address,
-              function(point) {
-                if (!point) {
-                  alert(address + " not found");
-                } else {
-                  map.setCenter(point, 15);
-                  var marker = new GMarker(point, {draggable: true});
-                  map.addOverlay(marker);
-                  GEvent.addListener(marker, "dragend", function() {
-                    marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
-                  });
-                  GEvent.addListener(marker, "click", function() {
-                    marker.openInfoWindowHtml(marker.getLatLng().toUrlValue(6));
-                  });
-                  GEvent.trigger(marker, "click");
-                }
-              }
-              );
-          }
+      var marker;
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: {lat: 59.325, lng: 18.070}
+        });
+
+        marker = new google.maps.Marker({
+          map: map,
+          draggable: true,
+          animation: google.maps.Animation.DROP,
+          position: {lat: 59.327, lng: 18.067}
+        });
+        marker.addListener('click', toggleBounce);
+      }
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
         }
 
-        function initialize() {
-          map = new GMap2(document.getElementById("map_canvas"));
-          map.setCenter(new GLatLng(37.984165, 23.729449), 10);      map.setUIToDefault();
-          geocoder = new GClientGeocoder();
-          getLocation();
-        }
-        function getLocation() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showOnMap);
-          } else { 
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        }
+      }
+    </script>
 
-
-        function showOnMap(position){
-          map = new GMap2(document.getElementById("map_canvas"));
-          map.setCenter(new GLatLng(position.coords.latitude, position.coords.longitude), 15);
-          map.setUIToDefault();
-          geocoder = new GClientGeocoder();
-        }
-
-
-      </script>
-
-    <body onload="initialize()" onunload="GUnload()">
-
-<form class="navbar-form" role="search">
-					<div class="input-group">
-						<input type="text" class="form-control" style="width: 100%" placeholder="Search">
-						<span class="input-group-btn">
-							<button type="reset" class="btn btn-default">
-								<span class="glyphicon glyphicon-remove">
-									<span class="sr-only">Close</span>
-								</span>
-							</button>
-							<button type="submit" class="btn btn-default">
-								<span class="glyphicon glyphicon-search">
-									<span class="sr-only">Search</span>
-								</span>
-							</button>
-						</span>
-					</div>
-				</form>
 
 
 
 	<div class="container-fluid">
     <div class="row">
-        <div class="col-md-5">
-            <div class="panel panel-default">
-                <div class="panel-heading">Events</div>
-                @foreach ($events as $event)
-                
-                <button type="button" class="btn btn-default list-group-item list-group-item-action flex-column align-items-start">
-	            <div class="d-flex w-100 justify-content-between event-det">
-	                <h2><a href="#" style="font-weight:1000; color:black">{{ $event['title'] }}</a></h2>
-					<p> <?php 
-						$desc = substr($event['description'], 0, 40);
-						echo $desc;
-					 ?>
-	                <small class="text-muted">3 days ago</small>
-	                <small class="text-muted"><br>Show on map</small>     
-	              </div>  
+      <div class="col-md-5">
+        <div class="panel panel-default">
+          <div class="panel-heading">Events</div>
+          @foreach ($events as $event)
 
-                @endforeach
-            </div>
-        </div>
-        <div class="col-md-1"></div>
-      <div id="map_canvas" class="col-md-5 col-sd-5" style="height:70vh"></div>
-    </div>
-</div>
-@endsection
+          <button type="button" class="btn btn-default list-group-item list-group-item-action flex-column align-items-start" onclick="showMarker('$event['lat']', '$event['long']');">
+           <div class="d-flex w-100 justify-content-between event-det">
+             <h2><a href="#" style="font-weight:1000; color:black">{{ $event['title'] }}</a></h2>
+             <p> <?php 
+             $desc = substr($event['description'], 0, 40);
+             echo $desc;
+             ?>
+
+           </div>  
+          </button>
+           @endforeach
+         </div>
+       </div>
+       <div class="col-md-1"></div>
+       <div id="map_canvas" class="col-md-5 col-sd-5" style="height:70vh"></div>
+     </div>
+   </div>
+
+   <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0&callback=initMap">
+    </script>
+   @endsection
