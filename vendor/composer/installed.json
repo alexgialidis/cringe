@@ -775,17 +775,17 @@
     },
     {
         "name": "laravel/framework",
-        "version": "v5.6.5",
-        "version_normalized": "5.6.5.0",
+        "version": "v5.6.6",
+        "version_normalized": "5.6.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "2e68209991e15aca1382ef9a3443d13f2e0d8755"
+            "reference": "d9bf9d0e103ec536e6c459f3f5400bf6b132bb2f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/2e68209991e15aca1382ef9a3443d13f2e0d8755",
-            "reference": "2e68209991e15aca1382ef9a3443d13f2e0d8755",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/d9bf9d0e103ec536e6c459f3f5400bf6b132bb2f",
+            "reference": "d9bf9d0e103ec536e6c459f3f5400bf6b132bb2f",
             "shasum": ""
         },
         "require": {
@@ -876,7 +876,7 @@
             "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~4.0).",
             "symfony/psr-http-message-bridge": "Required to psr7 bridging features (~1.0)."
         },
-        "time": "2018-02-22T19:21:38+00:00",
+        "time": "2018-02-27T14:02:09+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4119,6 +4119,53 @@
         ],
         "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
         "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles"
+    },
+    {
+        "name": "tom-lingham/searchy",
+        "version": "2.0.10",
+        "version_normalized": "2.0.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/TomLingham/Laravel-Searchy.git",
+            "reference": "8566a0a43a9df2d283380d5b3180e88e4e4da69e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/TomLingham/Laravel-Searchy/zipball/8566a0a43a9df2d283380d5b3180e88e4e4da69e",
+            "reference": "8566a0a43a9df2d283380d5b3180e88e4e4da69e",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/support": "5.*",
+            "php": ">=5.5.0"
+        },
+        "require-dev": {
+            "phpspec/phpspec": "~2.0"
+        },
+        "time": "2016-05-14T02:01:02+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "TomLingham\\Searchy\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Tom Lingham",
+                "email": "tjlingham@gmail.com"
+            }
+        ],
+        "description": "Laravel Searchy makes user driven searching easy with fuzzy search, basic string matching, Levenshtein Distance and more.",
+        "keywords": [
+            "fuzzy",
+            "laravel",
+            "search"
+        ]
     },
     {
         "name": "vlucas/phpdotenv",

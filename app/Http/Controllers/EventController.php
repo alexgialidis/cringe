@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Auth;
 
+use TomLingham\Searchy\Facades\Searchy;
+
 use App\Event;
 require(__DIR__ . '/maps.php');
 
@@ -19,6 +21,20 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
+
+        return view('events.index', compact('events'));
+    }
+
+    public function search(Request $request)
+    {
+
+        // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
+
+        $events = Event::hydrate((array)Searchy::events('title', 'description','category')->query(request('search'))->get()->toArray());
+
+
+
+       // dd((array) $events);
 
         return view('events.index', compact('events'));
     }
@@ -88,9 +104,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        return view('events.edit')
+        return view('events.edit', compact('event'));
     }
 
     /**
