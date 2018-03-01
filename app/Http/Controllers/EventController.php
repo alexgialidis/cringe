@@ -30,7 +30,7 @@ class EventController extends Controller
 
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
 
-        $events = Event::hydrate((array)Searchy::events('title', 'description','category')->query(request('search'))->get()->toArray());
+        $events = Event::hydrate((array)Searchy::driver('simple')->events('title', 'description','category')->query(request('search'))->get()->toArray());
 
 
 
