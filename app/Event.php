@@ -23,6 +23,7 @@ class Event extends Model
         'ages',
         'category',
         'availability',
+        'sold',
         'city',
         'address',
         'number',

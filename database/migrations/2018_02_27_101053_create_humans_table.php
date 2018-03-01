@@ -23,6 +23,8 @@ class CreateHumansTable extends Migration
             $table->string('number');
             $table->string('zip');
 
+            $table->integer('points');
+
             $table->decimal('lat', 9, 6); 
             $table->decimal('long', 9, 6);
 

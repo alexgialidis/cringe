@@ -76,6 +76,7 @@ class EventController extends Controller
             'ages' => request('ages'),
             'category' => request('category'),
             'availability' => request('availability'),
+            'sold' => 0,
             'city' => request('city'),
             'address' => request('address'),
             'number' => request('number'),
@@ -101,7 +102,7 @@ class EventController extends Controller
     public function stats()
     {
         $my_id = Auth::guard('provider')->user()->id;
-        $events = Event::where('id', $my_id);
+        $events = Event::where('provider_id', $my_id)->get();
         return view('events.stats', compact('events'));
     }
 

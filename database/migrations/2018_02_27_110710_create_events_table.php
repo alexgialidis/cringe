@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->string('ages');
             $table->string('category');
+            $table->integer('sold');
             $table->integer('availability');
             $table->string('city');
             $table->string('address');
