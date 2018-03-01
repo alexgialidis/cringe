@@ -21,6 +21,8 @@ Route::get('/events/stats', 'EventController@stats')->middleware('provider');
 
 Route::get('/events/search', 'EventController@search');
 
+Route::get('/events/loadstats', 'EventController@readData')->middleware('provider');
+
 Route::get('/events/{event}', 'EventController@show');
 
 Route::post('/events', 'EventController@store');

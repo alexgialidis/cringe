@@ -106,5 +106,17 @@ class EventController extends Controller
         return view('events.stats', compact('events'));
     }
 
+    public function readData(Request $request){
+        $my_id = Auth::guard('provider')->user()->id;
+         if ($request -> ajax()){
+            $events= Event::where([['provider_id', $my_id],['date', '>=' , $request->start],['date', '<' ,  $request->end]])->get();
+            return response()->json($events);         
+        }
+
+         //$msg = "This is a simple message.";
+         //$events = Event::orderBy('date')->get();
+         //return response()->json($events);
+    }
+
     
 }
