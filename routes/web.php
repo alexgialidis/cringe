@@ -18,9 +18,10 @@ Route::get('/', function () {
 Route::get('/events', 'EventController@index');
 Route::get('/events/create', 'EventController@create')->middleware('provider');
 Route::get('/events/stats', 'EventController@stats')->middleware('provider');
-Route::get('/events/edit/{event}', 'EventController@edit');
 
 Route::get('/events/search', 'EventController@search');
+
+Route::get('/events/loadstats', 'EventController@readData')->middleware('provider');
 
 Route::get('/events/{event}', 'EventController@show');
 

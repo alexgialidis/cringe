@@ -30,7 +30,7 @@ class EventController extends Controller
 
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
 
-        $events = Event::hydrate((array)Searchy::events('title', 'description','category')->query(request('search'))->get()->toArray());
+        $events = Event::hydrate((array)Searchy::driver('simple')->events('title', 'description','category')->query(request('search'))->get()->toArray());
 
 
 
@@ -76,6 +76,7 @@ class EventController extends Controller
             'ages' => request('ages'),
             'category' => request('category'),
             'availability' => request('availability'),
+            'sold' => 0,
             'city' => request('city'),
             'address' => request('address'),
             'number' => request('number'),
@@ -101,8 +102,20 @@ class EventController extends Controller
     public function stats()
     {
         $my_id = Auth::guard('provider')->user()->id;
-        $events = Event::where('id', $my_id);
+        $events = Event::where('provider_id', $my_id)->get();
         return view('events.stats', compact('events'));
+    }
+
+    public function readData(Request $request){
+        $my_id = Auth::guard('provider')->user()->id;
+         if ($request -> ajax()){
+            $events= Event::where([['provider_id', $my_id],['date', '>=' , $request->start],['date', '<' ,  $request->end]])->get();
+            return response()->json($events);         
+        }
+
+         //$msg = "This is a simple message.";
+         //$events = Event::orderBy('date')->get();
+         //return response()->json($events);
     }
 
     

@@ -49,7 +49,7 @@ type="text/javascript"></script>
 
           <button type="button" class="btn btn-default list-group-item list-group-item-action flex-column align-items-start" onclick="showMarker('$event['lat']', '$event['long']');">
            <div class="d-flex w-100 justify-content-between event-det">
-             <h2><a href="#" style="font-weight:1000; color:black">{{ $event['title'] }}</a></h2>
+             <h2><a href="/events/{{ $event['id'] }}" style="font-weight:1000; color:black">{{ $event['title'] }}</a></h2>
              <p> <?php 
              $desc = substr($event['description'], 0, 40);
              echo $desc;

@@ -1,4 +1,4 @@
-@extends('provider.layout.auth')
+@extends('layout')
 
 <!-- Main Content -->
 @section('content')
