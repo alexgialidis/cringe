@@ -22,6 +22,15 @@ Route::get('/events/stats', 'EventController@stats')->middleware('provider');
 Route::get('/events/search', 'EventController@search');
 
 Route::get('/events/loadstats', 'EventController@readData')->middleware('provider');
+Route::get('/admin/viewdataH', 'AdminController@viewDataH')->middleware('admin');
+Route::get('/admin/viewdataP', 'AdminController@viewDataP')->middleware('admin');
+
+Route::get('/admin/lockhuman', 'AdminController@lockHuman')->middleware('admin');
+Route::get('/admin/lockprovider', 'AdminController@lockProvider')->middleware('admin');
+Route::get('/admin/deleteprovider', 'AdminController@deleteProvider')->middleware('admin');
+Route::get('/admin/deletehuman', 'AdminController@deleteHuman')->middleware('admin');
+
+
 
 Route::get('/events/{event}', 'EventController@show');
 

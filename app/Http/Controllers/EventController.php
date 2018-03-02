@@ -85,7 +85,7 @@ class EventController extends Controller
             'address' => request('address'),
             'number' => request('number'),
             'zip' => request('zip'),
-            'lat' => $mapData['lat'], 
+            'lat' => $mapData['lat'],
             'long' => $mapData['lng'],
         ]);
 
@@ -122,5 +122,5 @@ class EventController extends Controller
          //return response()->json($events);
     }
 
-    
+
 }

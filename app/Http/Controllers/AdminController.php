@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Human;
+use App\Provider;
+
 class AdminController extends Controller
 {
     /**
@@ -80,5 +83,63 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function viewdataH(Request $request){
+         if ($request -> ajax()){
+            $events= Human::all();
+            return response()->json($events);
+        }
+    }
+    public function viewdataP(Request $request){
+         if ($request -> ajax()){
+            $events= Provider::all();
+            return response()->json($events);
+        }
+    }
+    public function deleteProvider(Request $request){
+         if ($request -> ajax()){
+            Provider::where('id', $request->id)->delete();
+            return response()->json("aa");
+        }
+    }
+    public function deleteHuman(Request $request){
+         if ($request -> ajax()){
+            Human::where('id', $request->id)->delete();
+            return response()->json("aa");
+        }
+    }
+
+    public function lockHuman(Request $request){
+        if ($request -> ajax()){
+            $humans= Human::where('id', $request->id)->get();
+            if ($humans[0]->lock==0){
+                Human::where('id', $request->id)->update(['lock' => 1]);
+                $new= Human::where('id', $request->id)->get();
+                return response()->json($new);
+
+            }else{
+                Human::where('id', $request->id)->update(['lock' => 0]);
+                $new= Human::where('id', $request->id)->get();
+                return response()->json($new);
+            }
+       }
+    }
+
+    public function lockProvider(Request $request){
+        if ($request -> ajax()){
+            $humans= Provider::where('id', $request->id)->get();
+            if ($humans[0]->lock==0){
+                Provider::where('id', $request->id)->update(['lock' => 1]);
+                $new= Provider::where('id', $request->id)->get();
+                return response()->json($new);
+
+            }else{
+                Provider::where('id', $request->id)->update(['lock' => 0]);
+                $new= Provider::where('id', $request->id)->get();
+                return response()->json($new);
+            }
+       }
     }
 }

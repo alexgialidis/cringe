@@ -9,28 +9,51 @@ var today = new Date();
 var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
-
+var dds, mms, yyyys;
 if(dd<10) {
     dd = '0'+dd
+    if (dd> 27) {
+        dds= "27";
+        if (dds<10) dds= '0' + dds;
+    }
+    else dds= dd;
 }
 
 if(mm<10) {
     mm = '0'+mm
+    if (mm != 1) {
+        mms=mm-1;
+        if (mms<10) mms= '0' + mms;
+        yyyys= yyyy;
+    }
+    else {
+        mms= 12;
+        yyyys= yyyy-1;
+    }
 }
+var def_end= yyyy + "-" + mm + "-" + dd;
+var def_start= yyyys + "-" + mms + "-" + dds;
+$(document).ready(function() {
+    document.getElementById('end_date').value = def_end;
+    document.getElementById('start_date').value = def_start;
+    load();
+ });
 
-today = yyyy + "/" + mm + "/" + dd;
-var d = new Date(today);
-def_end = d.toLocaleDateString();
-d.setMonth(d.getMonth() - 1);
-def_start= new Date(d.toLocaleDateString();
-alert(def_start);
 function load(){
 		var ticketsData= [];
 		var moneyData= [];
 		var titles=[];
 		var start=document.getElementById('start_date').value;
 		var end= document.getElementById('end_date').value;
-		if (!start) alert("aaaa");
+
+		if (!start) {
+            document.getElementById('start_date').value = def_start;
+            start= def_start;
+        }
+        if (!end) {
+            document.getElementById('end_date').value = def_end;
+            end= def_end;
+        }
 		$.get("{{ URL::to('events/loadstats') }}", {start: start, end: end},function (data){
 			$.each(data, function(i,value){
 				//ticketsData.push({y: value.availability, label: value.title});
@@ -100,15 +123,13 @@ ctx.height = 500;
 		<input id="start_date" type="date">
 		<input id="end_date" type="date">
 
-		<button type="button" class="btn btn-primary" id= "loadData" onclick="load(1)">
+		<button type="button" class="btn btn-primary" id= "loadData" onclick="load()">
           <span class="glyphicon glyphicon-refresh"></span> Load Data
         </button>
-		<button type="button" class="btn btn-primary" id= "exportChart">
+		<button type="button" class="btn btn-success" id= "exportChart">
           <span class="glyphicon glyphicon-export"></span> Export Chart
         </button>
-		<button type="button" class="btn btn-primary" id= "printChart">
-		  <span class="glyphicon glyphicon-print"></span> Print Chart
-		</button>	</div>
+</div>
 </div>
 <canvas id="canvas" style= "width:500px; height:auto; "></canvas>
 
