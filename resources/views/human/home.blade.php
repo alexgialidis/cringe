@@ -11,7 +11,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in as Provider!
+                    You are logged in as Parent!
                 </div>
             </div>
         </div>

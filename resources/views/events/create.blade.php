@@ -92,6 +92,7 @@
 
 							<div class="col-md-6">
 								<input id="ages" type="text" class="form-control{{ $errors->has('ages') ? ' is-invalid' : '' }}" name="ages" >
+								<small>E.g. 3-10</small>
 
 								@if ($errors->has('ages'))
 								<span class="invalid-feedback">

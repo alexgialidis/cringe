@@ -30,7 +30,7 @@ class EventController extends Controller
 
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
 
-        $events = Event::hydrate((array)Searchy::driver('simple')->events('title', 'description','category')->query(request('search'))->get()->toArray());
+        $events = Event::hydrate((array)Searchy::driver('simple')->events('title', 'description','category')->query(request('search'))->get()->where('provider_id', '1')->toArray());
 
 
 
@@ -67,13 +67,17 @@ class EventController extends Controller
 
         $mapData = map_google_search_result($geoData);
 
+
+        $ints = array_map('intval', explode('-', request('ages')));
+
         Event::create([
             'provider_id' => $request->user('provider')->id,
             'title' => request('title'),
             'date' => request('date'),
             'price' => request('price') ,
             'description' => request('description') ,
-            'ages' => request('ages'),
+            'min_age' => $ints[0],
+            'max_age' => $ints[1],
             'category' => request('category'),
             'availability' => request('availability'),
             'sold' => 0,

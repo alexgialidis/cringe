@@ -20,7 +20,8 @@ class CreateEventsTable extends Migration
             $table->date('date');
             $table->integer('price');
             $table->text('description');
-            $table->string('ages');
+            $table->integer('min_age');
+            $table->integer('max_age');
             $table->string('category');
             $table->integer('sold');
             $table->integer('availability');
