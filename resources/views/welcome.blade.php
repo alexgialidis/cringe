@@ -26,8 +26,15 @@
         </div>
 
         <div class="form-group">
-                <input type="number" class="form-control" name="radiys" id="radiys" placeholder="Radius in kilometers">
+                <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers">
         </div>
+
+        <label class="radio-inline">
+          <input type="radio" name="location" value="default" checked="checked">Use my default location
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="location" value="new">Use my current location
+        </label>
 
         <div class="form-group">
             <div class="col-md-6 col-md-offset-4">

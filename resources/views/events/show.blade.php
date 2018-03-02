@@ -6,6 +6,6 @@
 
 	<p>{{ $event['description'] }}</p>
 
-	<button onclick="/events/{{ $event['id'] }}/buy">Buy Ticket</button>
+	<a href="/events/{{ $event['id'] }}/buy">Buy ticket</a>
 
 @endsection

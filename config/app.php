@@ -151,6 +151,8 @@ return [
 
         TomLingham\Searchy\SearchyServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -214,6 +216,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Searchy' => TomLingham\Searchy\Facades\Searchy::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

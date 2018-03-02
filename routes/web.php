@@ -33,6 +33,8 @@ Route::get('/admin/deletehuman', 'AdminController@deleteHuman')->middleware('adm
 
 
 Route::get('/events/{event}', 'EventController@show');
+Route::get('/events/{event}/buy', 'EventController@buy')->middleware('human');
+
 
 Route::post('/events', 'EventController@store');
 
