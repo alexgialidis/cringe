@@ -3,8 +3,14 @@
 // Google maps - Geocoding
 function google_maps_search($search, $key)
 {
+    $arrContextOptions=array(
+    "ssl"=>array(
+        "verify_peer"=>false,
+        "verify_peer_name"=>false,
+    ),
+    );
     $url = sprintf('https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s', urlencode($search), urlencode($key));
-    $response = file_get_contents($url);
+    $response = file_get_contents($url,false, stream_context_create($arrContextOptions));
     $data = json_decode($response, 'true');
     return $data;
 }
