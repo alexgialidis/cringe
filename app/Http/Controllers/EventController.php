@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use App;
+use \App\Mail\Ticket;
+use Mail;
 
 use TomLingham\Searchy\Facades\Searchy;
+
 
 use App\Event;
 require(__DIR__ . '/maps.php');
@@ -28,15 +32,42 @@ class EventController extends Controller
     public function search(Request $request)
     {
 
+        if (request('max_price') == NULL) {
+            $max_price = 100000000;
+        }
+
+        else {
+            $max_price = request('max_price');
+        }
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
 
-        $events = Event::hydrate((array)Searchy::driver('simple')->events('title', 'description','category')->query(request('search'))->get()->where('provider_id', '1')->toArray());
+        if (request('age') == NULL) {
+            $events = Event::hydrate((array)Searchy::driver('simple')
+                ->events('title', 'description','category')
+                ->query(request('search'))
+                ->get()
+                ->where(
+                    'price', '<=', $max_price
+                )
+                ->toArray());
+        }
 
+        else 
+        {
+            $events = Event::hydrate((array)Searchy::driver('simple')
+                ->events('title', 'description','category')
+                ->query(request('search'))
+                ->get()
+                ->where('max_age', '>=', request('age'))
+                ->where('min_age', '<=', request('age'))
+                ->where('price', '<=', $max_price)
+                ->toArray());
+        }
 
+        $location = request('location');
+        $radius = request('radius');
 
-       // dd((array) $events);
-
-        return view('events.index', compact('events'));
+        return view('events.index', compact('events', 'radius', 'location'));
     }
 
     /**
@@ -112,7 +143,7 @@ class EventController extends Controller
 
     public function readData(Request $request){
         $my_id = Auth::guard('provider')->user()->id;
-         if ($request -> ajax()){
+        if ($request -> ajax()){
             $events= Event::where([['provider_id', $my_id],['date', '>=' , $request->start],['date', '<' ,  $request->end]])->get();
             return response()->json($events);         
         }
@@ -120,6 +151,35 @@ class EventController extends Controller
          //$msg = "This is a simple message.";
          //$events = Event::orderBy('date')->get();
          //return response()->json($events);
+    }
+
+    public function buy(Event $event)
+    {
+        if (Auth::guard('human')->user()->lock) {
+            return view('events.show', compact('event'));
+        }
+
+        else{
+            $data = [
+                'name' => Auth::guard('human')->user()->name,
+                'event' => $event
+            ];
+        
+            //dd($data);
+            $pdf = App::make('dompdf.wrapper');
+            $pdf->loadView('pdf.invoice', $data);
+
+            $email = Auth::guard('human')->user()->email;
+
+            Mail::send('pdf.mail', ['name' => $data['name'], 'event' => $data['event']], function($message) use ($email, $pdf){
+                $message->to($email)
+                    ->subject('Ticket')
+                    ->attachData($pdf->output(), "ticket.pdf");
+                    
+            }); 
+
+            return $pdf->stream();
+        }
     }
 
     
