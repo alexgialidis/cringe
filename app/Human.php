@@ -16,7 +16,7 @@ class Human extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'password', 'city', 'address', 'number', 'zip', 'lat', 'long', 'points',
+        'name', 'surname', 'email', 'password', 'city', 'address', 'number', 'zip', 'lat', 'long', 'points', 'lock',
     ];
 
     /**

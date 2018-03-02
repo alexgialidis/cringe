@@ -87,6 +87,8 @@ class RegisterController extends Controller
             'number' => $data['number'],
             'lat' => $mapData['lat'],
             'long' => $mapData['lng'],
+            'lock' => false,
+
         ]);
 }
 

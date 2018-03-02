@@ -30,6 +30,8 @@ class CreateProvidersTable extends Migration
             $table->decimal('lat', 9, 6); 
             $table->decimal('long', 9, 6);
 
+            $table->boolean('lock');
+
             $table->rememberToken();
             $table->timestamps();
         });
