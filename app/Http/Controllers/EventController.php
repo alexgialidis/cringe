@@ -12,7 +12,6 @@ use DB;
 use \Exception;
 
 use TomLingham\Searchy\Facades\Searchy;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 use App\Event;
@@ -183,7 +182,7 @@ class EventController extends Controller
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
-                
+
                 DB::commit();
 
             } catch (\Exception $e){
