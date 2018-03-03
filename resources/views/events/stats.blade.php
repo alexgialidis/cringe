@@ -1,8 +1,8 @@
 @extends ('layout')
 
 @section ('content')
-<script src="http://www.chartjs.org/dist/2.7.2/Chart.bundle.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script>
 
 var today = new Date();
@@ -33,18 +33,21 @@ if(mm<10) {
 }
 var def_end= yyyy + "-" + mm + "-" + dd;
 var def_start= yyyys + "-" + mms + "-" + dds;
-$(document).ready(function() {
-    document.getElementById('end_date').value = def_end;
-    document.getElementById('start_date').value = def_start;
-    load();
- });
-
+ $(document).ready(function() {
+     document.getElementById('end_date').value = def_end;
+     document.getElementById('start_date').value = def_start;
+     load();
+     loadHistoryData();
+  });
+var start;
+var end;
 function load(){
+        resettable();
 		var ticketsData= [];
 		var moneyData= [];
 		var titles=[];
-		var start=document.getElementById('start_date').value;
-		var end= document.getElementById('end_date').value;
+		start=document.getElementById('start_date').value;
+		end= document.getElementById('end_date').value;
 
 		if (!start) {
             document.getElementById('start_date').value = def_start;
@@ -56,82 +59,178 @@ function load(){
         }
 		$.get("{{ URL::to('events/loadstats') }}", {start: start, end: end},function (data){
 			$.each(data, function(i,value){
-				//ticketsData.push({y: value.availability, label: value.title});
-				//moneyData.push({y: value.availability * value.price, label: value.title})
-				//console.log(data);
-				//alert(document.getElementById('date').value);
-				ticketsData.push(value.availability);
-				moneyData.push(value.availability * value.price);
-				titles.push(value.title);
-				console.log(value);
+				ticketsData.push({y: value.sold, label: value.title});
+				moneyData.push({y: value.sold * value.price, label: value.title});
+                loadHistoryData(value);
 			})
-			console.log(ticketsData);
-			initData(ticketsData, moneyData, titles);
+			//console.log(ticketsData, moneyData, start, end);
+			plot(ticketsData, moneyData, start, end);
 		})
 	}
+function resettable(){
+    $("#historytable tr").remove();
+    var table = document.getElementById("historytable");
+    var row = table.insertRow(0);
 
-function initData(tickets, money, titles) {
-	var color = Chart.helpers.color;
-	var barChartData = {
-			labels: titles,
-			datasets: [{
-				label: 'Dataset 1',
-				backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-				borderColor: window.chartColors.red,
-				borderWidth: 1,
-				data: tickets
-			}, {
-				label: 'Dataset 2',
-				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-				borderColor: window.chartColors.blue,
-				borderWidth: 1,
-				data: money
-			}]
+    var title = row.insertCell(0);
+    var date = row.insertCell(1);
+    var eventdate = row.insertCell(2);
+    var minage = row.insertCell(3);
+    var maxage = row.insertCell(4);
+    var description = row.insertCell(5);
 
-		};
-	plot(barChartData);
+    title.innerHTML = "<b>Title</b>";
+    date.innerHTML = "<b>Date</b>";
+    minage.innerHTML = "<b>Min Age</b>";
+    maxage.innerHTML = "<b>Max Age</b>";
+    eventdate.innerHTML = "<b>Event Date</b>";
+    description.innerHTML = "<b>Description</b>";
 }
-function plot(barChartData){
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myBar = new Chart(ctx, {
-				type: 'bar',
-				data: barChartData,
-				options: {
-					responsive: true,
-					legend: {
-						position: 'top',
-					},
-					title: {
-						display: true,
-						text: 'Chart.js Bar Chart'
-					}
-				}
-			});
-			document.getElementById("printChart").addEventListener("click",function(){
-				char.print();
-			});
-			document.getElementById("exportChart").addEventListener("click",function(){
-				chart.exportChart({format: "jpg"});
-			});
-		}
-var ctx = document.getElementById("myChart");
-ctx.height = 500;
 
+function plot(t, m, start, end) {
+    CanvasJS.addColorSet("color",
+            [//colorSet Array
+
+                "#66ccff",
+    	        "#005b9f",
+    	        "#2439a5",
+    	        "#1045b6"
+            ]);
+    var chart = new CanvasJS.Chart("chartContainer", {
+    	animationEnabled: true,
+        exportEnabled: true,
+        colorSet: "color",
+    	title:{
+    		text: "Πωληθέντα Εισητήρια και Έσοδα κατά την Περίοδο: " + start + " εως " + end,
+            fontColor: "#005b9f"
+    	},
+    	axisY: {
+    		title: "Αριθμός Εισητηρίων",
+    		titleFontColor: "#66ccff",
+    		lineColor: "#66ccff",
+    		labelFontColor: "#66ccff",
+    		tickColor: "#66ccff"
+    	},
+    	axisY2: {
+    		title: "Έσοδα €",
+    		titleFontColor: "#005b9f",
+    		lineColor: "#005b9f",
+    		labelFontColor: "#005b9f",
+    		tickColor: "#005b9f"
+    	},
+    	toolTip: {
+    		shared: true
+    	},
+    	legend: {
+    		cursor:"pointer",
+    		itemclick: toggleDataSeries
+    	},
+    	data: [{
+    		type: "column",
+    		name: "Αριθμός Εισητηρίων",
+    		legendText: "Έσοδα €",
+    		showInLegend: true,
+    		dataPoints:t
+    	},
+    	{
+    		type: "column",
+    		name: "Έσοδα €",
+    		legendText: "Έσοδα €",
+    		axisYType: "secondary",
+    		showInLegend: true,
+    		dataPoints:m
+    	}]
+    });
+    chart.render();
+
+    function toggleDataSeries(e) {
+    	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    		e.dataSeries.visible = false;
+    	}
+    	else {
+    		e.dataSeries.visible = true;
+    	}
+    	chart.render();
+    }
+
+    var chartPie = new CanvasJS.Chart("chartContainerPie", {
+	animationEnabled: true,
+    exportEnabled: true,
+    colorSet: "color",
+	title: {
+		text: "Ποσοστιαία Κατανομή Εσόδων κατα την Περίοδο: " + start + " εως " + end,
+        fontColor: "#005b9f"
+	},
+	data: [{
+		type: "pie",
+		startAngle: 240,
+        yValueFormatString: ":##\"€\"",
+		indexLabel: "{label} {y}",
+		dataPoints: m
+	}]
+});
+chartPie.render();
+    }
+
+    function loadHistoryData(value){
+                     var tr= $("<tr/>");
+                     tr.append($("<td/>", {
+                         text: value.title
+                     })).append($("<td/>", {
+                         text: value.date
+                     })).append($("<td/>", {
+                         text: value.created_at
+                     })).append($("<td/>", {
+                         text: value.min_age
+                     })).append($("<td/>", {
+                         text: value.max_age
+                     })).append($("<td/>", {
+                         text: value.description
+                     }))
+                     $('#historydata').append(tr);
+        }
 </script>
-<div class="container">
-	<div class= "row col-md-9 col-offset-2">
+
+ <div class="container ">
+	<div class= "row">
 		<input id="start_date" type="date">
 		<input id="end_date" type="date">
 
 		<button type="button" class="btn btn-primary" id= "loadData" onclick="load()">
-          <span class="glyphicon glyphicon-refresh"></span> Load Data
+         <span class="glyphicon glyphicon-refresh"></span> Load Data
         </button>
-		<button type="button" class="btn btn-success" id= "exportChart">
-          <span class="glyphicon glyphicon-export"></span> Export Chart
-        </button>
+    </div>
 </div>
-</div>
-<canvas id="canvas" style= "width:500px; height:auto; "></canvas>
+<hr>
+<div id="chartContainer" style="height: 450px; width: 100%;"></div>
+<hr>
+<div id="chartContainerPie" style="height: 400px; width: 100%;"></div>
+<hr>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">History of Events</div>
 
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                <div class="panel-body">
+                    <table class= "table table-bordered table-striped table-condensed text-center" id= "historytable">
+                        <thread>
+                            <tr>
+                                <th class= "text-center">Event Title</th>
+                                <th class= "text-center">Date</th>
+                                <th class= "text-center">Date of Event</th>
+                                <th class= "text-center">Min Age</th>
+                                <th class= "text-center">Max Age</th>
+                                <th class= "text-center">Text</th>
+                            </tr>
+                        </thread>
+                        <tbody id="historydata">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+ <!-- <script type="text/javascript" src= "/assets/js/canvasjs.min.js"></script> -->
+ <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 @endsection
