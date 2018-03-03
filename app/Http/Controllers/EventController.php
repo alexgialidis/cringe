@@ -12,6 +12,7 @@ use DB;
 use \Exception;
 
 use TomLingham\Searchy\Facades\Searchy;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 use App\Event;
@@ -164,10 +165,13 @@ class EventController extends Controller
         else{
             $data = [
                 'name' => Auth::guard('human')->user()->name,
-                'event' => $event
+                'event' => $event,
+                'qr' => QrCode::size(100)->color(255,0,255)->generate('Make me into a QrCode!'),
             ];
 
             //dd($data);
+
+
 
             DB::beginTransaction();
 
@@ -187,19 +191,26 @@ class EventController extends Controller
                 return view('error', ['string' => $e->getMessage()]);
             }
 
+
+
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.invoice', $data);
+
+            $pdf->stream();
 
             $email = Auth::guard('human')->user()->email;
 
             Mail::send('pdf.mail', ['name' => $data['name'], 'event' => $data['event']], function($message) use ($email, $pdf){
                 $message->to($email)
                     ->subject('Ticket')
-                    ->attachData($pdf->output(), "ticket.pdf");
+                    ->attachData($pdf->output(), "ticket.pdf")
+                    ->embedData(QrCode::format('png')->generate('Embed me into an e-mail!'), 'QrCode.png', 'image/png');
+
 
             });
 
             return view('events.show', compact('event'));
+
 
         }
     }
