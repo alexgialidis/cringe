@@ -28,11 +28,48 @@ class EventController extends Controller
     {
         $events = Event::all();
 
-        return view('events.index', compact('events'));
+        $latlng = [
+            'lat' => 37.9746528,
+            'lng' => 23.7326806
+        ];
+        return view('events.index', compact('events', 'latlng'));
     }
 
     public function search(Request $request)
     {
+        $location = request('location');
+
+        if (request('radius'))
+            $radius = request('radius');
+        else
+            $radius = 5;
+
+        if (request('lat')){
+            $latlng = [
+                'lat' => request('lat'),
+                'lng' => request('lng')
+            ];
+        }elseif(Auth::guard('human')->user()) {
+            $latlng = [
+                'lat' => Auth::guard('human')->user()->lat,
+                'lng' => Auth::guard('human')->user()->long
+            ];
+        }elseif(Auth::guard('provider')->user()) {
+            $latlng = [
+                'lat' => Auth::guard('provider')->user()->lat,
+                'lng' => Auth::guard('provider')->user()->long
+            ];
+        }else {
+            $latlng = [
+                'lat' => 37.9746528,
+                'lng' => 23.7326806
+            ];
+        }
+        $R = 6371;  // earth's mean radius, km
+        $maxLat = $latlng['lat'] + rad2deg($radius/$R);
+        $minLat = $latlng['lat'] - rad2deg($radius/$R);
+        $maxLon = $latlng['lng'] + rad2deg(asin($radius/$R) / cos(deg2rad($latlng['lat'])));
+        $minLon = $latlng['lng'] - rad2deg(asin($radius/$R) / cos(deg2rad($latlng['lat'])));
 
         if (request('max_price') == NULL) {
             $max_price = 100000000;
@@ -48,9 +85,11 @@ class EventController extends Controller
                 ->events('title', 'description','category')
                 ->query(request('search'))
                 ->get()
-                ->where(
-                    'price', '<=', $max_price
-                )
+                ->where('price', '<=', $max_price)
+                ->where('lat', '<=', $maxLat)
+                ->where('lat', '>=', $minLat)
+                ->where('long', '<=', $maxLon)
+                ->where('long', '>=', $minLon)
                 ->toArray());
         }
 
@@ -63,13 +102,17 @@ class EventController extends Controller
                 ->where('max_age', '>=', request('age'))
                 ->where('min_age', '<=', request('age'))
                 ->where('price', '<=', $max_price)
+                ->where('price', '<=', $max_price)
+                ->where('lat', '<=', $maxLat)
+                ->where('lat', '>=', $minLat)
+                ->where('long', '<=', $maxLon)
+                ->where('long', '>=', $minLon)
                 ->toArray());
         }
 
-        $location = request('location');
-        $radius = request('radius');
 
-        return view('events.index', compact('events', 'radius', 'location'));
+
+        return view('events.index', compact('events', 'radius', 'location', 'latlng'));
     }
 
     /**
@@ -179,7 +222,7 @@ class EventController extends Controller
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
-                
+
                 DB::commit();
 
             } catch (\Exception $e){

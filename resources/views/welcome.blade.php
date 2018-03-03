@@ -2,6 +2,23 @@
 
 @section ('content')
 
+<script type="text/javascript">
+
+document.getElementById("new").style.color = "Red";
+function getLoc(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPos);
+    } else {
+        //document.getElementById("new").style.color = "red";
+    }
+}
+
+function setPos(position){
+    document.getElementById("lat").value = position.coords.latitude;
+    document.getElementById("lng").value = position.coords.longitude;
+    //alert(document.getElementById("lat").value + "," + document.getElementById("lng").value);
+}
+</script>
 
 
 <div class="content col-md-6 col-md-offset-3 vcenter ertical-center">
@@ -13,7 +30,7 @@
         <!-- {{ csrf_field() }} -->
         <div class="form-group has-feedback">
             <label for="search" class="sr-only">Search</label>
-            <input type="text" class="form-control" name="search" id="search" placeholder="Search">  
+            <input type="text" class="form-control" name="search" id="search" placeholder="Search">
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
 
@@ -26,16 +43,24 @@
         </div>
 
         <div class="form-group">
-                <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers">
+                <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers e.g. 5" >
         </div>
 
+<!-- @if (Auth::guard('human')->user())
         <label class="radio-inline">
           <input type="radio" name="location" value="default" checked="checked">Use my default location
         </label>
+@endif -->
         <label class="radio-inline">
-          <input type="radio" name="location" value="new">Use my current location
+          <input type="radio" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location
         </label>
 
+        <div class="form-group">
+                <input class="form-control" name="lat" id="lat" style="display:none">
+        </div>
+        <div class="form-group">
+                <input class="form-control" name="lng" id="lng" style="display:none">
+        </div>
         <div class="form-group">
             <div class="col-md-6 col-md-offset-4">
                 <button type="submit" class="btn btn-primary" style="display:none">
@@ -43,9 +68,9 @@
                 </button>
             </div>
         </div>
-        
 
-    </form> 
+
+    </form>
 </div>
 
 @endsection
