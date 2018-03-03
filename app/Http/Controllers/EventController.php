@@ -41,6 +41,7 @@ class EventController extends Controller
 
         if (request('radius'))
             $radius = request('radius');
+
         else
             $radius = 5;
 
@@ -79,7 +80,8 @@ class EventController extends Controller
             $max_price = request('max_price');
         }
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
-
+        $today= date("Y-m-d");
+        //dd($today);
         if (request('age') == NULL) {
             $events = Event::hydrate((array)Searchy::driver('simple')
                 ->events('title', 'description','category')
@@ -90,6 +92,7 @@ class EventController extends Controller
                 ->where('lat', '>=', $minLat)
                 ->where('long', '<=', $maxLon)
                 ->where('long', '>=', $minLon)
+                ->where('date', '>=', $today)
                 ->toArray());
         }
 
