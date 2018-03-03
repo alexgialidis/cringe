@@ -92,7 +92,9 @@ class EventController extends Controller
     {
         //dd($request()->all());
 
-        $key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
+        //$key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
+
+        $key = 'AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo';
 
         $search = implode(', ', [$request['address'], $request['number'], $request['zip']]);
 
@@ -165,7 +167,6 @@ class EventController extends Controller
             $data = [
                 'name' => Auth::guard('human')->user()->name,
                 'event' => $event,
-                'qr' => QrCode::size(100)->color(255,0,255)->generate('Make me into a QrCode!'),
             ];
 
             //dd($data);
@@ -202,9 +203,7 @@ class EventController extends Controller
             Mail::send('pdf.mail', ['name' => $data['name'], 'event' => $data['event']], function($message) use ($email, $pdf){
                 $message->to($email)
                     ->subject('Ticket')
-                    ->attachData($pdf->output(), "ticket.pdf")
-                    ->embedData(QrCode::format('png')->generate('Embed me into an e-mail!'), 'QrCode.png', 'image/png');
-
+                    ->attachData($pdf->output(), "ticket.pdf");
 
             });
 

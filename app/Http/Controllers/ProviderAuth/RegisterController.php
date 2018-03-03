@@ -66,7 +66,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
+        $key = 'AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo';
 
         $search = implode(', ', [$data['address'], $data['number'], $data['zip']]);
 
