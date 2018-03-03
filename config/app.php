@@ -153,6 +153,8 @@ return [
 
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -218,6 +220,8 @@ return [
         'Searchy' => TomLingham\Searchy\Facades\Searchy::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
 
     ],
 
