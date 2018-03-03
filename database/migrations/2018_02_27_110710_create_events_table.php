@@ -18,7 +18,7 @@ class CreateEventsTable extends Migration
             $table->integer('provider_id')->unsigned();
             $table->string('title');
             $table->date('date');
-            $table->integer('price');
+            $table->decimal('price', 10, 2);
             $table->text('description');
             $table->integer('min_age');
             $table->integer('max_age');

@@ -1,0 +1,1 @@
+<h1 align="center">{{ $string }}</h1>

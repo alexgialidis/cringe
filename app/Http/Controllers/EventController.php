@@ -8,6 +8,8 @@ use Auth;
 use App;
 use \App\Mail\Ticket;
 use Mail;
+use DB;
+use \Exception;
 
 use TomLingham\Searchy\Facades\Searchy;
 
@@ -166,6 +168,25 @@ class EventController extends Controller
             ];
         
             //dd($data);
+
+            DB::beginTransaction();
+
+            try {
+                if ($event->availability <= 0)
+                    throw new Exception("No available Tickets");
+                elseif (Auth::guard('human')->user()->points - $event->price < 0)
+                    throw new Exception("Not Enough Points");
+                DB::table('events')->where('id', $event->id)->decrement('availability');
+                DB::table('events')->where('id', $event->id)->increment('sold');
+                DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
+                
+                DB::commit();
+
+            } catch (\Exception $e){
+                DB::rollback();
+                return view('error', ['string' => $e->getMessage()]);
+            }
+
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.invoice', $data);
 
@@ -178,7 +199,8 @@ class EventController extends Controller
                     
             }); 
 
-            return $pdf->stream();
+            return view('events.show', compact('event'));
+
         }
     }
 
