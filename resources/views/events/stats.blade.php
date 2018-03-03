@@ -42,7 +42,6 @@ var def_start= yyyys + "-" + mms + "-" + dds;
 var start;
 var end;
 function load(){
-        resettable();
 		var ticketsData= [];
 		var moneyData= [];
 		var titles=[];
@@ -57,6 +56,7 @@ function load(){
             document.getElementById('end_date').value = def_end;
             end= def_end;
         }
+        $('#historydata').empty();
 		$.get("{{ URL::to('events/loadstats') }}", {start: start, end: end},function (data){
 			$.each(data, function(i,value){
 				ticketsData.push({y: value.sold, label: value.title});
@@ -67,26 +67,6 @@ function load(){
 			plot(ticketsData, moneyData, start, end);
 		})
 	}
-function resettable(){
-    $("#historytable tr").remove();
-    var table = document.getElementById("historytable");
-    var row = table.insertRow(0);
-
-    var title = row.insertCell(0);
-    var date = row.insertCell(1);
-    var eventdate = row.insertCell(2);
-    var minage = row.insertCell(3);
-    var maxage = row.insertCell(4);
-    var description = row.insertCell(5);
-
-    title.innerHTML = "<b>Title</b>";
-    date.innerHTML = "<b>Date</b>";
-    minage.innerHTML = "<b>Min Age</b>";
-    maxage.innerHTML = "<b>Max Age</b>";
-    eventdate.innerHTML = "<b>Event Date</b>";
-    description.innerHTML = "<b>Description</b>";
-}
-
 function plot(t, m, start, end) {
     CanvasJS.addColorSet("color",
             [//colorSet Array

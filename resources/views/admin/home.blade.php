@@ -63,8 +63,8 @@ $(document).ready(function() {
 })
 
 function loadHumansData(){
+        $('#humansdata').empty();
         $.get("{{ URL::to('admin/viewdataH') }}",function (data){
-            //$("#humansdata").remove();
             $.each(data, function(i,value){
                  var tr= $("<tr/>");
                  tr.append($("<td/>", {
@@ -87,8 +87,6 @@ function loadHumansData(){
                          " <button type='button' class='btn btn-danger btn-sm' onclick= deleteHuman('" + value.id +"')> <span class='glyphicon glyphicon-trash'></span> Delete</button>"
                      }))
                  }
-                 //console.log(value.id);
-
                  $('#humansdata').append(tr);
 
             })
@@ -96,6 +94,7 @@ function loadHumansData(){
     }
 
     function loadProvidersData(){
+            $('#providersdata').empty();
             $.get("{{ URL::to('admin/viewdataP') }}",function (data){
                 //$("#humansdata").remove();
                 $.each(data, function(i,value){
@@ -128,83 +127,23 @@ function loadHumansData(){
         }
     function lockHuman(i,line){
         $.get("{{ URL::to('admin/lockhuman') }}", {id: parseInt(i)},function (data){
-            $("#humantable tr").remove();
-            var table = document.getElementById("humantable");
-            var row = table.insertRow(0);
-
-            var id = row.insertCell(0);
-            var name = row.insertCell(1);
-            var surname = row.insertCell(2);
-            var email = row.insertCell(3);
-            var actions = row.insertCell(4);
-
-            id.innerHTML = "<b>Id</b>";
-            name.innerHTML = "<b>Name</b>";
-            surname.innerHTML = "<b>Surname</b>";
-            email.innerHTML = "<b>Email</b>";
-            actions.innerHTML = "<b>Actions</b>";
             loadHumansData();
         })
     }
     function lockProvider(i){
         $.get("{{ URL::to('admin/lockprovider') }}", {id: parseInt(i)},function (data){
-            $("#providertable tr").remove();
-            var table = document.getElementById("providertable");
-            var row = table.insertRow(0);
-
-            var id = row.insertCell(0);
-            var name = row.insertCell(1);
-            var surname = row.insertCell(2);
-            var email = row.insertCell(3);
-            var actions = row.insertCell(4);
-
-            id.innerHTML = "<b>Id</b>";
-            name.innerHTML = "<b>Name</b>";
-            surname.innerHTML = "<b>Surname</b>";
-            email.innerHTML = "<b>Email</b>";
-            actions.innerHTML = "<b>Actions</b>";
             loadProvidersData();
         })
     }
 
     function deleteProvider(i){
         $.get("{{ URL::to('admin/deleteprovider') }}", {id: parseInt(i)},function (data){
-            $("#providertable tr").remove();
-            var table = document.getElementById("providertable");
-            var row = table.insertRow(0);
-
-            var id = row.insertCell(0);
-            var name = row.insertCell(1);
-            var surname = row.insertCell(2);
-            var email = row.insertCell(3);
-            var actions = row.insertCell(4);
-
-            id.innerHTML = "<b>Id</b>";
-            name.innerHTML = "<b>Name</b>";
-            surname.innerHTML = "<b>Surname</b>";
-            email.innerHTML = "<b>Email</b>";
-            actions.innerHTML = "<b>Actions</b>";
             loadProvidersData();
         })
     }
 
     function deleteHuman(i){
         $.get("{{ URL::to('admin/deletehuman') }}", {id: parseInt(i)},function (data){
-            $("#humantable tr").remove();
-            var table = document.getElementById("humantable");
-            var row = table.insertRow(0);
-
-            var id = row.insertCell(0);
-            var name = row.insertCell(1);
-            var surname = row.insertCell(2);
-            var email = row.insertCell(3);
-            var actions = row.insertCell(4);
-
-            id.innerHTML = "<b>Id</b>";
-            name.innerHTML = "<b>Name</b>";
-            surname.innerHTML = "<b>Surname</b>";
-            email.innerHTML = "<b>Email</b>";
-            actions.innerHTML = "<b>Actions</b>";
             loadHumansData();
         })
     }
