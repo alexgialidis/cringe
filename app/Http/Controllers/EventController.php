@@ -54,7 +54,7 @@ class EventController extends Controller
                 ->toArray());
         }
 
-        else 
+        else
         {
             $events = Event::hydrate((array)Searchy::driver('simple')
                 ->events('title', 'description','category')
@@ -118,7 +118,7 @@ class EventController extends Controller
             'address' => request('address'),
             'number' => request('number'),
             'zip' => request('zip'),
-            'lat' => $mapData['lat'], 
+            'lat' => $mapData['lat'],
             'long' => $mapData['lng'],
         ]);
 
@@ -147,7 +147,7 @@ class EventController extends Controller
         $my_id = Auth::guard('provider')->user()->id;
         if ($request -> ajax()){
             $events= Event::where([['provider_id', $my_id],['date', '>=' , $request->start],['date', '<' ,  $request->end]])->get();
-            return response()->json($events);         
+            return response()->json($events);
         }
 
          //$msg = "This is a simple message.";
@@ -166,7 +166,7 @@ class EventController extends Controller
                 'name' => Auth::guard('human')->user()->name,
                 'event' => $event
             ];
-        
+
             //dd($data);
 
             DB::beginTransaction();
@@ -196,13 +196,13 @@ class EventController extends Controller
                 $message->to($email)
                     ->subject('Ticket')
                     ->attachData($pdf->output(), "ticket.pdf");
-                    
-            }); 
+
+            });
 
             return view('events.show', compact('event'));
 
         }
     }
 
-    
+
 }
