@@ -28,31 +28,30 @@ function setPos(position){
     <form method="GET" action="/events/search" class="search-form">
         <!-- {{ csrf_field() }} -->
 
-<div id= "big">
+    <div id= "big">
         <div class="form-group has-feedback">
             <label for="search" class="sr-only">Search</label>
-            <input type="text" class="form-control" name="search" id="search" placeholder="Search">
+            <input type="text" class="form-control" name="search" id="search" placeholder="Search" autocomplete="off">
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
 
 
         <div id="filters" style="display: none;">
 
+            <div class="form-group">
+                    <input type="number" class="form-control" name="age" id="age" placeholder="Age" autocomplete="off">
+            </div>
 
-        <div class="form-group">
-                <input type="number" class="form-control" name="age" id="age" placeholder="Age">
-        </div>
+            <div class="form-group">
+                    <input type="number" class="form-control" name="max_price" id="max_price" placeholder="Maximum Price" autocomplete="off">
+            </div>
 
-        <div class="form-group">
-                <input type="number" class="form-control" name="max_price" id="max_price" placeholder="Maximum Price">
-        </div>
-
-        <div class="form-group">
-                <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers e.g. 5" >
-        </div>
+            <div class="form-group">
+                    <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers e.g. 5" autocomplete="off">
+            </div>
 
         </div>
-</div>
+    </div>
 <!-- @if (Auth::guard('human')->user())
         <label class="radio-inline">
           <input type="radio" name="location" value="default" checked="checked">Use my default location
@@ -81,14 +80,18 @@ function setPos(position){
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#big").focusin(function(){
-        document.getElementById("filters").style.display= "block";
+    
+    $(document).on('click','body',function(){
+        //alert(document.activeElement.tagName);
+        if (document.activeElement.tagName == "INPUT"){
+            document.getElementById("filters").style.display= "block";
+        }
+        else{
+            document.getElementById("filters").style.display= "none";
+
+        }
     });
-    $("#big").focusout(function(){
-        document.getElementById("filters").style.display= "none";
-    });
-});
+
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

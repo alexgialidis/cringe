@@ -5,6 +5,20 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script>
 
+function getLoc(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPos);
+    } else {
+        //document.getElementById("new").style.color = "red";
+    }
+}
+
+function setPos(position){
+    document.getElementById("lat").value = position.coords.latitude;
+    document.getElementById("lng").value = position.coords.longitude;
+    //alert(document.getElementById("lat").value + "," + document.getElementById("lng").value);
+}
+
 var map;
 var coords = [];
 var markers = [];
@@ -78,98 +92,63 @@ function resetCenter(id){
 }
 </script>
 
-<!-- code for the search bar -->
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-            <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" placeholder="Search for snippets" />
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
-                            <!-- <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button> -->
-                            <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <form class="form-horizontal" role="form">
-                                  <div class="form-group">
-                                    <label for="filter">Filter by</label>
-                                    <select class="form-control">
-                                        <option value="0" selected>All Snippets</option>
-                                        <option value="1">Featured</option>
-                                        <option value="2">Most popular</option>
-                                        <option value="3">Top rated</option>
-                                        <option value="4">Most commented</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Author</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="contain">Contains the words</label>
-                                    <input class="form-control" type="text" />
-                                  </div>
-                                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                </form>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-	</div>
-
-    <style media="screen">
-    body {
-padding-top: 50px;
-}
-.dropdown.dropdown-lg .dropdown-menu {
-margin-top: -1px;
-padding: 6px 20px;
-}
-.input-group-btn .btn-group {
-display: flex !important;
-}
-.btn-group .btn {
-border-radius: 0;
-margin-left: -1px;
-}
-.btn-group .btn:last-child {
-border-top-right-radius: 4px;
-border-bottom-right-radius: 4px;
-}
-.btn-group .form-horizontal .btn[type="submit"] {
-border-top-left-radius: 4px;
-border-bottom-left-radius: 4px;
-}
-.form-horizontal .form-group {
-margin-left: 0;
-margin-right: 0;
-}
-.form-group .form-control:last-child {
-border-top-left-radius: 4px;
-border-bottom-left-radius: 4px;
-}
-
-@media screen and (min-width: 768px) {
-#adv-search {
-    width: 500px;
-    margin: 0 auto;
-}
-.dropdown.dropdown-lg {
-    position: static !important;
-}
-.dropdown.dropdown-lg .dropdown-menu {
-    min-width: 500px;
-}
-}
-    </style>
-<!-- end of the search bar code -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-5">
+            <form method="GET" action="/events/search" class="search-form">
+        <!-- {{ csrf_field() }} -->
+
+    <div id= "big">
+        <div class="form-group has-feedback">
+            <label for="search" class="sr-only">Search</label>
+            <input type="text" class="form-control" name="search" id="search" placeholder="Search" autocomplete="off">
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+
+
+        <div id="filters" style="display: none;">
+
+            <div class="form-group">
+                    <input type="number" class="form-control" name="age" id="age" placeholder="Age" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                    <input type="number" class="form-control" name="max_price" id="max_price" placeholder="Maximum Price" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                    <input type="number" class="form-control" name="radius" id="radius" placeholder="Radius in kilometers e.g. 5" autocomplete="off">
+            </div>
+
+        </div>
+    </div>
+<!-- @if (Auth::guard('human')->user())
+        <label class="radio-inline">
+          <input type="radio" name="location" value="default" checked="checked">Use my default location
+        </label>
+@endif -->
+        <label class="radio-inline ">
+          <input type="radio" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location
+        </label>
+
+        <div class="form-group">
+                <input class="form-control" name="lat" id="lat" style="display:none">
+        </div>
+        <div class="form-group">
+                <input class="form-control" name="lng" id="lng" style="display:none">
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-4">
+                <button type="submit" class="btn btn-primary" style="display:none">
+                    Search
+                </button>
+            </div>
+        </div>
+
+
+    </form>
             <div class="panel panel-default">
+
                 <div class="panel-heading">Events</div>
                 @foreach ($events as $event)
                 <button type="button" class="btn btn-default list-group-item list-group-item-action flex-column align-items-start" onclick="resetCenter({{$event['id']}})">
@@ -212,4 +191,19 @@ border-bottom-left-radius: 4px;
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo&callback=initMap">
 </script>
+<script type="text/javascript">
+    
+    $(document).on('click','body',function(){
+        //alert(document.activeElement.tagName);
+        if (document.activeElement.tagName == "INPUT"){
+            document.getElementById("filters").style.display= "block";
+        }
+        else{
+            document.getElementById("filters").style.display= "none";
+
+        }
+    });
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @endsection

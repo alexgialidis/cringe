@@ -144,7 +144,6 @@
                 <ul class="nav navbar-nav">
                     <li class=""><a href="/">Home</a></li>
                     <li><a href="/events">Events</a></li>
-                    <li><a href="#">Profile</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
