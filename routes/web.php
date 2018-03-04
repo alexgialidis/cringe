@@ -30,8 +30,6 @@ Route::get('/admin/lockprovider', 'AdminController@lockProvider')->middleware('a
 Route::get('/admin/deleteprovider', 'AdminController@deleteProvider')->middleware('admin');
 Route::get('/admin/deletehuman', 'AdminController@deleteHuman')->middleware('admin');
 
-
-
 Route::get('/events/{event}', 'EventController@show');
 Route::get('/events/{event}/buy', 'EventController@buy')->middleware('human');
 
@@ -53,6 +51,9 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::group(['prefix' => 'provider'], function () {
+    Route::get('/profile', function () {
+        return view('provider.profile', ['provider' => Auth::guard('provider')->user()]);
+    })->middleware('provider');
   Route::get('/login', 'ProviderAuth\LoginController@showLoginForm')->name('login');
   Route::post('/login', 'ProviderAuth\LoginController@login');
   Route::post('/logout', 'ProviderAuth\LoginController@logout')->name('logout');
@@ -67,6 +68,10 @@ Route::group(['prefix' => 'provider'], function () {
 });
 
 Route::group(['prefix' => 'human'], function () {
+  Route::get('/addPoints', 'HumanController@addPoints')->middleware('human');
+  Route::get('/profile', function () {
+      return view('human.profile', ['human' => Auth::guard('human')->user()]);
+  })->middleware('human');
   Route::get('/login', 'HumanAuth\LoginController@showLoginForm')->name('login');
   Route::post('/login', 'HumanAuth\LoginController@login');
   Route::post('/logout', 'HumanAuth\LoginController@logout')->name('logout');

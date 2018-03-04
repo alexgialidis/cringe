@@ -4,7 +4,6 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-
 <script>
 
 var map;
@@ -123,6 +122,12 @@ function resetCenter(id){
 }
 
 </style>
+
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Cringe Team</span>
+      </div>
+    </footer>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo&callback=initMap">
 </script>
