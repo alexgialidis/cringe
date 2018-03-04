@@ -212,5 +212,6 @@ chartPie.render();
         </div>
 
  <!-- <script type="text/javascript" src= "/assets/js/canvasjs.min.js"></script> -->
- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+ <script type="text/javascript" src="{{ URL::asset('js/plots.js') }}"></script>
 @endsection
