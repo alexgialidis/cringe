@@ -20,10 +20,10 @@ require(__DIR__ . '/maps.php');
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $events = Event::all();
@@ -36,15 +36,16 @@ class EventController extends Controller
         return view('events.index', compact('events', 'latlng','zoom'));
     }
 
+
     public function search(Request $request)
     {
         $location = request('location');
         $zoom=15;
         if (request('radius'))
-            $radius = request('radius');
+        $radius = request('radius');
 
         else
-            $radius = 5;
+        $radius = 5;
 
         if (request('lat')){
             $latlng = [
@@ -86,33 +87,33 @@ class EventController extends Controller
         //dd($today);
         if (request('age') == NULL) {
             $events = Event::hydrate((array)Searchy::driver('simple')
-                ->events('title', 'description','category')
-                ->query(request('search'))
-                ->get()
-                ->where('price', '<=', $max_price)
-                ->where('lat', '<=', $maxLat)
-                ->where('lat', '>=', $minLat)
-                ->where('long', '<=', $maxLon)
-                ->where('long', '>=', $minLon)
-                ->where('date', '>=', $today)
-                ->toArray());
+            ->events('title', 'description','category')
+            ->query(request('search'))
+            ->get()
+            ->where('price', '<=', $max_price)
+            ->where('lat', '<=', $maxLat)
+            ->where('lat', '>=', $minLat)
+            ->where('long', '<=', $maxLon)
+            ->where('long', '>=', $minLon)
+            ->where('date', '>=', $today)
+            ->toArray());
         }
 
         else
         {
             $events = Event::hydrate((array)Searchy::driver('simple')
-                ->events('title', 'description','category')
-                ->query(request('search'))
-                ->get()
-                ->where('max_age', '>=', request('age'))
-                ->where('min_age', '<=', request('age'))
-                ->where('price', '<=', $max_price)
-                ->where('price', '<=', $max_price)
-                ->where('lat', '<=', $maxLat)
-                ->where('lat', '>=', $minLat)
-                ->where('long', '<=', $maxLon)
-                ->where('long', '>=', $minLon)
-                ->toArray());
+            ->events('title', 'description','category')
+            ->query(request('search'))
+            ->get()
+            ->where('max_age', '>=', request('age'))
+            ->where('min_age', '<=', request('age'))
+            ->where('price', '<=', $max_price)
+            ->where('price', '<=', $max_price)
+            ->where('lat', '<=', $maxLat)
+            ->where('lat', '>=', $minLat)
+            ->where('long', '<=', $maxLon)
+            ->where('long', '>=', $minLon)
+            ->toArray());
         }
 
 
@@ -121,21 +122,21 @@ class EventController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
         return view('events.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         //dd($request()->all());
@@ -176,11 +177,11 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show(Event $event)
     {
         return view('events.show', compact('event'));
@@ -200,13 +201,14 @@ class EventController extends Controller
             return response()->json($events);
         }
 
-         //$msg = "This is a simple message.";
-         //$events = Event::orderBy('date')->get();
-         //return response()->json($events);
+        //$msg = "This is a simple message.";
+        //$events = Event::orderBy('date')->get();
+        //return response()->json($events);
     }
 
     public function buy(Event $event)
     {
+
         if (Auth::guard('human')->user()->lock) {
             return view('events.show', compact('event'));
         }
@@ -217,7 +219,7 @@ class EventController extends Controller
                 'event' => $event,
             ];
 
-            //dd($data);
+
 
 
 
@@ -225,9 +227,9 @@ class EventController extends Controller
 
             try {
                 if ($event->availability <= 0)
-                    throw new Exception("No available Tickets");
+                throw new Exception("No available Tickets");
                 elseif (Auth::guard('human')->user()->points - $event->price < 0)
-                    throw new Exception("Not Enough Points");
+                throw new Exception("Not Enough Points");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);

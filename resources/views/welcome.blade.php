@@ -80,7 +80,7 @@ function setPos(position){
 </div>
 
 <script type="text/javascript">
-    
+
     $(document).on('click','body',function(){
         //alert(document.activeElement.tagName);
         if (document.activeElement.tagName == "INPUT"){
