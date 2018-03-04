@@ -28,7 +28,7 @@ function setPos(position){
     <form method="GET" action="/events/search" class="search-form">
         <!-- {{ csrf_field() }} -->
 
-<div id= "big">
+<div id= "big" onfocusin="show()" onfocusout= "hide()">
         <div class="form-group has-feedback">
             <label for="search" class="sr-only">Search</label>
             <input type="text" class="form-control" name="search" id="search" placeholder="Search">
@@ -39,8 +39,8 @@ function setPos(position){
         <div id="filters" style="display: none;">
 
 
-        <div class="form-group">
-                <input type="number" class="form-control" name="age" id="age" placeholder="Age">
+        <div class="form-group" >
+                <input type="number" class="form-control" name="age" id="age" placeholder="Age" onfocusin="show()" onfocusout= "hide()">
         </div>
 
         <div class="form-group">
@@ -81,14 +81,14 @@ function setPos(position){
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#big").focusin(function(){
-        document.getElementById("filters").style.display= "block";
-    });
-    $("#big").focusout(function(){
-        document.getElementById("filters").style.display= "none";
-    });
-});
+
+function show(){
+    document.getElementById("filters").style.display= "block";
+}
+
+function hide(){
+    document.getElementById("filters").style.display= "none";
+}
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
