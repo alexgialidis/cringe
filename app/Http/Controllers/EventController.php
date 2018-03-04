@@ -32,13 +32,14 @@ class EventController extends Controller
             'lat' => 37.9746528,
             'lng' => 23.7326806
         ];
-        return view('events.index', compact('events', 'latlng'));
+        $zoom=6;
+        return view('events.index', compact('events', 'latlng','zoom'));
     }
 
     public function search(Request $request)
     {
         $location = request('location');
-
+        $zoom=15;
         if (request('radius'))
             $radius = request('radius');
 
@@ -65,6 +66,7 @@ class EventController extends Controller
                 'lat' => 37.9746528,
                 'lng' => 23.7326806
             ];
+            $zoom=6;
         }
         $R = 6371;  // earth's mean radius, km
         $maxLat = $latlng['lat'] + rad2deg($radius/$R);
@@ -115,7 +117,7 @@ class EventController extends Controller
 
 
 
-        return view('events.index', compact('events', 'radius', 'location', 'latlng'));
+        return view('events.index', compact('events', 'radius', 'location', 'latlng','zoom'));
     }
 
     /**
