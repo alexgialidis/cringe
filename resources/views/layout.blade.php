@@ -16,161 +16,176 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-            <style>
-            html, body {
-                background-color: #fff;
-                color: black;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 1000;
-                height: 100vh;
-                margin: 0;
-            }
+    <style>
+    ::-webkit-scrollbar {
+    display: none;
+    }
 
-            .full-height {
-                height: 100vh;
-            }
+    html, body {
+        padding-top: 40px;
+        background-color: #fff;
+        color: black;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 1000;
+        height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+    }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    .full-height {
+        height: 100vh;
+    }
 
-            .position-ref {
-                position: relative;
-            }
+    .flex-center {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    .position-ref {
+        position: relative;
+    }
 
-            .content {
-                text-align: center;
-            }
+    .top-right {
+        position: absolute;
+        right: 10px;
+        top: 18px;
+    }
 
-            .title {
-                font-size: 84px;
-            }
+    .content {
+        text-align: center;
+    }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+    .title {
+        font-size: 84px;
+    }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
+    .links > a {
+        color: #636b6f;
+        padding: 0 25px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
 
-            .dropbtn {
-                background-color: #4CAF50;
-                color: white;
-                padding: 16px;
-                font-size: 16px;
-                border: none;
-                cursor: pointer;
-            }
+    .m-b-md {
+        margin-bottom: 30px;
+    }
 
-            .dropdown {
-                position: relative;
-                display: inline-block;
-            }
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
 
-            .dropdown-menu {
-                display: none;
-                position: absolute;
-                right: 0;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-            }
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
 
-            .dropdown-menu a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-            }
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
 
-            .dropdown-menu a:hover {background-color: #f1f1f1}
+    .dropdown-menu a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
-            .dropdown:hover .dropdown-menu {
-                display: block;
-            }
+    .dropdown-menu a:hover {background-color: #f1f1f1}
 
-            .dropdown:hover .dropbtn {
-                background-color: #3e8e41;
-            }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
 
 
-        </style>
+    </style>
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
     <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-            ]); ?>
-        </script>
-    </head>
-    <body>
+    window.Laravel = <?php echo json_encode([
+        'csrfToken' => csrf_token(),
+    ]); ?>
+    </script>
+</head>
+<body>
 
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Cringe</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class=""><a href="/">Home</a></li>
-            <li><a href="/events">Events</a></li>
-            <li><a href="/profile">Profile</a></li>
-        </ul>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Cringe</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="/">Home</a></li>
+                    <li><a href="/events">Events</a></li>
+                </ul>
 
-        <!-- Right Side Of Navbar -->
-        <ul class="nav navbar-nav navbar-right">
-            <!-- Authentication Links -->
-            @if (Auth::guard('provider')->user())
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ Auth::guard('provider')->user()->name }} <span class="caret"></span>
-                </a>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Authentication Links -->
+                    @if (Auth::guard('provider')->user())
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            {{ Auth::guard('provider')->user()->name }} <span class="caret"></span>
+                        </a>
 
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{ url('/provider/logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ url('/provider/profile') }}">
+                                My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/provider/logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
 
-                    <form id="logout-form" action="{{ url('/provider/logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </li>
-            </ul>
-        </li>
-        @elseif (Auth::guard('human')->user())
-              <li class="dropdown">
+                        <form id="logout-form" action="{{ url('/provider/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            @elseif (Auth::guard('human')->user())
+            <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     {{ Auth::guard('human')->user()->name }} <span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="{{ url('/human/profile') }}">
+                        My Profile
+                    </a>
+                    </li>
                     <li>
                         <a href="{{ url('/human/logout') }}"
                         onclick="event.preventDefault();
@@ -185,50 +200,52 @@
             </ul>
         </li>
         @elseif (Auth::guard('admin')->user())
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a href="{{ url('/admin/logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout
                 </a>
 
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{ url('/admin/logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
+                <form id="logout-form" action="{{ url('/admin/logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+        </ul>
+    </li>
+    @else
 
-                    <form id="logout-form" action="{{ url('/admin/logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-log-in"></span> Sign Up
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url('/provider/register') }}">Provider</a></li>
+                    <li><a href="{{ url('/human/register') }}">Parent</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-log-in"></span> Log In
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url('/provider/login') }}">Provider</a></li>
+                        <li><a href="{{ url('/human/login') }}">Parent</a></li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-            @else
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-log-in"></span> Sign Up
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url('/provider/register') }}">Provider</a></li>
-                            <li><a href="{{ url('/human/register') }}">Parent</a></li>
-                      </ul>
-                  </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-log-in"></span> Log In
-                        <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url('/provider/login') }}">Provider</a></li>
-                            <li><a href="{{ url('/human/login') }}">Parent</a></li>
-                      </ul>
-                  </li>
-              </ul>
-        @endif
-    </ul>
-</div>
+            @endif
+        </ul>
+    </div>
 </div>
 </nav>
+
+
 
 @yield('content')
 
@@ -237,8 +254,8 @@
 </body>
 <script>
 $(document).ready(function() {
-  $('li.active').removeClass('active');
-  $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+    $('li.active').removeClass('active');
+    $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
 });
 </script>
 </html>

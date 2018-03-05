@@ -49,7 +49,6 @@ var def_start= yyyys + "-" + mms + "-" + dds;
 var start;
 var end;
 function load(){
-        resettable();
 		var ticketsData= [];
 		var moneyData= [];
 		var titles=[];
@@ -64,6 +63,7 @@ function load(){
             document.getElementById('end_date').value = def_end;
             end= def_end;
         }
+        $('#historydata').empty();
 		$.get("{{ URL::to('events/loadstats') }}", {start: start, end: end},function (data){
 			$.each(data, function(i,value){
 				ticketsData.push({y: value.sold, label: value.title});
@@ -182,7 +182,7 @@ chartPie.render();
     function loadHistoryData(value){
                      var tr= $("<tr/>");
                      tr.append($("<td/>", {
-                         text: value.title
+                         html: '<a href="url" title= "View History of the event">'+ value.title + '</a>'
                      })).append($("<td/>", {
                          text: value.date
                      })).append($("<td/>", {
@@ -240,5 +240,6 @@ chartPie.render();
         </div>
 
  <!-- <script type="text/javascript" src= "/assets/js/canvasjs.min.js"></script> -->
- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+ <script type="text/javascript" src="{{ URL::asset('js/plots.js') }}"></script>
 @endsection

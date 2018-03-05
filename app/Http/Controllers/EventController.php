@@ -20,19 +20,60 @@ require(__DIR__ . '/maps.php');
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $events = Event::all();
 
-        return view('events.index', compact('events'));
+        $latlng = [
+            'lat' => 37.9746528,
+            'lng' => 23.7326806
+        ];
+        $zoom=6;
+        return view('events.index', compact('events', 'latlng','zoom'));
     }
+
 
     public function search(Request $request)
     {
+        $location = request('location');
+        $zoom=15;
+        if (request('radius'))
+        $radius = request('radius');
+
+        else
+        $radius = 5;
+
+        if (request('lat')){
+            $latlng = [
+                'lat' => request('lat'),
+                'lng' => request('lng')
+            ];
+        }elseif(Auth::guard('human')->user()) {
+            $latlng = [
+                'lat' => Auth::guard('human')->user()->lat,
+                'lng' => Auth::guard('human')->user()->long
+            ];
+        }elseif(Auth::guard('provider')->user()) {
+            $latlng = [
+                'lat' => Auth::guard('provider')->user()->lat,
+                'lng' => Auth::guard('provider')->user()->long
+            ];
+        }else {
+            $latlng = [
+                'lat' => 37.9746528,
+                'lng' => 23.7326806
+            ];
+            $zoom=6;
+        }
+        $R = 6371;  // earth's mean radius, km
+        $maxLat = $latlng['lat'] + rad2deg($radius/$R);
+        $minLat = $latlng['lat'] - rad2deg($radius/$R);
+        $maxLon = $latlng['lng'] + rad2deg(asin($radius/$R) / cos(deg2rad($latlng['lat'])));
+        $minLon = $latlng['lng'] - rad2deg(asin($radius/$R) / cos(deg2rad($latlng['lat'])));
 
         if (request('max_price') == NULL) {
             $max_price = 100000000;
@@ -42,57 +83,67 @@ class EventController extends Controller
             $max_price = request('max_price');
         }
         // $events = Searchy::events('title', 'description','category')->query(request('search'))->get();
-
+        $today= date("Y-m-d");
+        //dd($today);
         if (request('age') == NULL) {
             $events = Event::hydrate((array)Searchy::driver('simple')
-                ->events('title', 'description','category')
-                ->query(request('search'))
-                ->get()
-                ->where(
-                    'price', '<=', $max_price
-                )
-                ->toArray());
+            ->events('title', 'description','category')
+            ->query(request('search'))
+            ->get()
+            ->where('price', '<=', $max_price)
+            ->where('lat', '<=', $maxLat)
+            ->where('lat', '>=', $minLat)
+            ->where('long', '<=', $maxLon)
+            ->where('long', '>=', $minLon)
+            ->where('date', '>=', $today)
+            ->toArray());
         }
 
         else
         {
             $events = Event::hydrate((array)Searchy::driver('simple')
-                ->events('title', 'description','category')
-                ->query(request('search'))
-                ->get()
-                ->where('max_age', '>=', request('age'))
-                ->where('min_age', '<=', request('age'))
-                ->where('price', '<=', $max_price)
-                ->toArray());
+            ->events('title', 'description','category')
+            ->query(request('search'))
+            ->get()
+            ->where('max_age', '>=', request('age'))
+            ->where('min_age', '<=', request('age'))
+            ->where('price', '<=', $max_price)
+            ->where('price', '<=', $max_price)
+            ->where('lat', '<=', $maxLat)
+            ->where('lat', '>=', $minLat)
+            ->where('long', '<=', $maxLon)
+            ->where('long', '>=', $minLon)
+            ->toArray());
         }
 
-        $location = request('location');
-        $radius = request('radius');
 
-        return view('events.index', compact('events', 'radius', 'location'));
+
+        return view('events.index', compact('events', 'radius', 'location', 'latlng','zoom'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
         return view('events.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         //dd($request()->all());
 
-        $key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
+        //$key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
+
+        $key = 'AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo';
 
         $search = implode(', ', [$request['address'], $request['number'], $request['zip']]);
 
@@ -126,11 +177,11 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show(Event $event)
     {
         return view('events.show', compact('event'));
@@ -150,13 +201,14 @@ class EventController extends Controller
             return response()->json($events);
         }
 
-         //$msg = "This is a simple message.";
-         //$events = Event::orderBy('date')->get();
-         //return response()->json($events);
+        //$msg = "This is a simple message.";
+        //$events = Event::orderBy('date')->get();
+        //return response()->json($events);
     }
 
     public function buy(Event $event)
     {
+
         if (Auth::guard('human')->user()->lock) {
             return view('events.show', compact('event'));
         }
@@ -164,22 +216,29 @@ class EventController extends Controller
         else{
             $data = [
                 'name' => Auth::guard('human')->user()->name,
-                'event' => $event
+                'event' => $event,
             ];
 
-            //dd($data);
+
+
+
 
             DB::beginTransaction();
 
             try {
                 if ($event->availability <= 0)
-                    throw new Exception("No available Tickets");
+                throw new Exception("No available Tickets");
                 elseif (Auth::guard('human')->user()->points - $event->price < 0)
-                    throw new Exception("Not Enough Points");
+                throw new Exception("Not Enough Points");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
-                
+                DB::table('tickets')->insert([
+                    'human_id' => Auth::guard('human')->user()->id, 
+                    'event_id' => $event->id,
+                    'provider_id' => $event->provider_id
+                ]);
+
                 DB::commit();
 
             } catch (\Exception $e){
@@ -187,8 +246,12 @@ class EventController extends Controller
                 return view('error', ['string' => $e->getMessage()]);
             }
 
+            
+
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.invoice', $data);
+
+            $pdf->stream();
 
             $email = Auth::guard('human')->user()->email;
 
@@ -199,7 +262,8 @@ class EventController extends Controller
 
             });
 
-            return view('events.show', compact('event'));
+            return redirect('/events');
+
 
         }
     }
