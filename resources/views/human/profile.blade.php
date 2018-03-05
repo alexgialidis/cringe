@@ -152,7 +152,7 @@ function addPoints(){
         var cell2 = row.insertCell(1);
 
         cell1.innerHTML = "Wallet Points";
-        cell2.innerHTML = data;
+        cell2.innerHTML = data.toFixed(2);
     });
 }
 </script>
