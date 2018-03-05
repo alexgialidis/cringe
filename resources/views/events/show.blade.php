@@ -72,13 +72,14 @@
         </div>
         <div class="modal-footer">
 			<form action="/events/{{ $event['id'] }}/buy">
-          		<button type="link" class="btn btn-lg btn-primary center-block" >Proceed</button>
+          		<button type="link" class="btn btn-lg btn-primary center-block" id="proceed">Proceed</button>
 			</form>
         </div>
       </div>
 
     </div>
   </div>
+@if (Auth::guard('human')->user())
 
 <script type="text/javascript">
 var line1= document.getElementById("line1");
@@ -87,24 +88,30 @@ var line3= document.getElementById("line3");
 
 
 $('#myModal').on('shown.bs.modal', function (e) {
-
 	if ({{ Auth::guard('human')->user()->lock }}== "1"){
 		line1.innerHTML= "<span class='glyphicon glyphicon-lock'></span> Hm... You have locked by Admin!!! "
 		line2.innerHTML= "Contact with cringeTeam@contact.com for more details"
+		document.getElementById("proceed").disabled = true;
 	}
 	else if (parseFloat({{ $event['price'] }}) > parseFloat({{ Auth::guard('human')->user()->points }})){
 		line1.innerHTML="Price: {{ $event['price'] }}";
 		line2.innerHTML= "Your Points: {{ Auth::guard('human')->user()->points }} ";
 		line3.innerHTML="You dont have enough points to Buy this ticket!";
+		document.getElementById("proceed").disabled = true;
 	}
 	else{
 		var total= parseFloat({{ Auth::guard('human')->user()->points }}) - parseFloat({{ $event['price'] }});
-		line1.innerHTML="Price: {{ $event['price'] }}";
-		line2.innerHTML= "Your Points: {{ Auth::guard('human')->user()->points }} ";
-		line3.innerHTML= "New: " + total;
+		line1.innerHTML="Your Points: {{ Auth::guard('human')->user()->points }}";
+		line2.innerHTML= "Price: - {{ $event['price'] }} ";
+		line3.innerHTML= "New Total: " + total;
+		line1.style.color = "green";
+		line2.style.color = "red";
+		line3.style.color = "blue";
+
 	}
+
 })
 </script>
 
-
+@endif
 @endsection
