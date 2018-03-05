@@ -47,11 +47,12 @@ class EventController extends Controller
         else
         $radius = 5;
 
-        if (request('location')){
+        if (request('lat')){
             $latlng = [
                 'lat' => request('lat'),
                 'lng' => request('lng')
             ];
+            //dd( request('location'));
         }elseif(Auth::guard('human')->user()) {
             $latlng = [
                 'lat' => Auth::guard('human')->user()->lat,
