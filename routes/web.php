@@ -33,6 +33,9 @@ Route::get('/admin/deletehuman', 'AdminController@deleteHuman')->middleware('adm
 Route::get('/events/{event}', 'EventController@show');
 Route::get('/events/{event}/buy', 'EventController@buy')->middleware('human');
 
+Route::get('/events/{event}/history', 'EventController@history')->middleware('provider');
+
+
 
 Route::post('/events', 'EventController@store');
 
@@ -72,6 +75,7 @@ Route::group(['prefix' => 'human'], function () {
   Route::get('/profile', function () {
       return view('human.profile', ['human' => Auth::guard('human')->user()]);
   })->middleware('human');
+  Route::get('/history', 'HumanController@history')->middleware('human');
   Route::get('/login', 'HumanAuth\LoginController@showLoginForm')->name('login');
   Route::post('/login', 'HumanAuth\LoginController@login');
   Route::post('/logout', 'HumanAuth\LoginController@logout')->name('logout');

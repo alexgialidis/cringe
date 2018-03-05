@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Auth;
 use App;
-use \App\Mail\Ticket;
+use App\Ticket;
 use Mail;
 use DB;
 use \Exception;
@@ -26,7 +26,8 @@ class EventController extends Controller
     */
     public function index()
     {
-        $events = Event::all();
+        $today= date("Y-m-d");
+        $events = Event::where('date', '>=', $today)->get();
 
         $latlng = [
             'lat' => 37.9746528,
@@ -234,7 +235,7 @@ class EventController extends Controller
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
                 DB::table('tickets')->insert([
-                    'human_id' => Auth::guard('human')->user()->id, 
+                    'human_id' => Auth::guard('human')->user()->id,
                     'event_id' => $event->id,
                     'provider_id' => $event->provider_id
                 ]);
@@ -246,7 +247,7 @@ class EventController extends Controller
                 return view('error', ['string' => $e->getMessage()]);
             }
 
-            
+
 
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.invoice', $data);
@@ -266,6 +267,20 @@ class EventController extends Controller
 
 
         }
+    }
+
+    public function history(Event $event)
+    {
+        //$tickets = Ticket::where('event_id', $event['id'])->get();
+        $tickets = DB::table('tickets')
+                    ->join('humans', 'humans.id', '=', 'tickets.human_id')
+                    ->where('event_id', $event['id'])
+                    ->get();
+
+        $tickets = json_decode($tickets, true);
+
+        return view('/history', compact('tickets'));
+
     }
 
 

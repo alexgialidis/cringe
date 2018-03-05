@@ -155,7 +155,7 @@ chartPie.render();
     function loadHistoryData(value){
                      var tr= $("<tr/>");
                      tr.append($("<td/>", {
-                         html: '<a href="url" title= "View History of the event">'+ value.title + '</a>'
+                         html: '<a href="/events/'+ value.id + '/history" title= "View History of the event">'+ value.title + '</a>'
                      })).append($("<td/>", {
                          text: value.date
                      })).append($("<td/>", {

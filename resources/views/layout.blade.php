@@ -187,6 +187,11 @@
                     </a>
                     </li>
                     <li>
+                        <a href="{{ url('/human/history') }}">
+                        My History
+                    </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/human/logout') }}"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
