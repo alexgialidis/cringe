@@ -1,6 +1,13 @@
 @extends ('layout')
 
 @section ('content')
+
+<style>
+input{
+  height: 32px;
+}
+</style>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script>
@@ -76,47 +83,47 @@ function resettable(){
     var date = row.insertCell(1);
     var eventdate = row.insertCell(2);
     var minage = row.insertCell(3);
-    var maxage = row.insertCell(4);
-    var description = row.insertCell(5);
+    // var maxage = row.insertCell(4);
+    var description = row.insertCell(4);
 
     title.innerHTML = "<b>Title</b>";
     date.innerHTML = "<b>Date</b>";
-    minage.innerHTML = "<b>Min Age</b>";
-    maxage.innerHTML = "<b>Max Age</b>";
+    minage.innerHTML = "<b>Age Range</b>";
+    // maxage.innerHTML = "<b>Max Age</b>";
     eventdate.innerHTML = "<b>Event Date</b>";
     description.innerHTML = "<b>Description</b>";
 }
 
 function plot(t, m, start, end) {
-    CanvasJS.addColorSet("color",
-            [//colorSet Array
-
-                "#66ccff",
-    	        "#005b9f",
-    	        "#2439a5",
-    	        "#1045b6"
-            ]);
+    // CanvasJS.addColorSet("color",
+    //         [//colorSet Array
+    //
+    //           "#66ccff",
+    // 	        "#005b9f",
+    // 	        "#2439a5",
+    // 	        "#1045b6"
+    //         ]);
     var chart = new CanvasJS.Chart("chartContainer", {
     	animationEnabled: true,
         exportEnabled: true,
         colorSet: "color",
     	title:{
-    		text: "Πωληθέντα Εισητήρια και Έσοδα κατά την Περίοδο: " + start + " εως " + end,
-            fontColor: "#005b9f"
+    		text: "Sold tickets and income from " + start + " to " + end,
+            fontColor: "#272727"
     	},
     	axisY: {
-    		title: "Αριθμός Εισητηρίων",
-    		titleFontColor: "#66ccff",
-    		lineColor: "#66ccff",
-    		labelFontColor: "#66ccff",
-    		tickColor: "#66ccff"
+    		title: "Number of Tickets",
+    		titleFontColor: "#5675be",
+    		lineColor: "#666666",
+    		labelFontColor: "#666666",
+    		tickColor: "#666666"
     	},
     	axisY2: {
-    		title: "Έσοδα €",
-    		titleFontColor: "#005b9f",
-    		lineColor: "#005b9f",
-    		labelFontColor: "#005b9f",
-    		tickColor: "#005b9f"
+    		title: "Income in €",
+    		titleFontColor: "#c83f4b",
+    		lineColor: "#666666",
+    		labelFontColor: "#666666",
+    		tickColor: "#666666"
     	},
     	toolTip: {
     		shared: true
@@ -127,15 +134,15 @@ function plot(t, m, start, end) {
     	},
     	data: [{
     		type: "column",
-    		name: "Αριθμός Εισητηρίων",
-    		legendText: "Έσοδα €",
+    		name: "Number of Tickets",
+    		legendText: "Number of Tickets",
     		showInLegend: true,
     		dataPoints:t
     	},
     	{
     		type: "column",
-    		name: "Έσοδα €",
-    		legendText: "Έσοδα €",
+    		name: "Income in €",
+    		legendText: "Income in €",
     		axisYType: "secondary",
     		showInLegend: true,
     		dataPoints:m
@@ -158,8 +165,8 @@ function plot(t, m, start, end) {
     exportEnabled: true,
     colorSet: "color",
 	title: {
-		text: "Ποσοστιαία Κατανομή Εσόδων κατα την Περίοδο: " + start + " εως " + end,
-        fontColor: "#005b9f"
+		text: "Income Percentage Distribution from " + start + " to " + end,
+        fontColor: "#272727"
 	},
 	data: [{
 		type: "pie",
@@ -181,9 +188,7 @@ chartPie.render();
                      })).append($("<td/>", {
                          text: value.created_at
                      })).append($("<td/>", {
-                         text: value.min_age
-                     })).append($("<td/>", {
-                         text: value.max_age
+                         text: value.min_age + " - " + value.max_age
                      })).append($("<td/>", {
                          text: value.description
                      }))
@@ -191,21 +196,24 @@ chartPie.render();
         }
 </script>
 
- <div class="container ">
+ <div class="container" style="text-align: center;">
 	<div class= "row">
 		<input id="start_date" type="date">
 		<input id="end_date" type="date">
 
 		<button type="button" class="btn btn-primary" id= "loadData" onclick="load()">
          <span class="glyphicon glyphicon-refresh"></span> Load Data
-        </button>
+    </button>
     </div>
 </div>
 <hr>
+<br> <br>
 <div id="chartContainer" style="height: 450px; width: 100%;"></div>
 <hr>
+<br> <br>
 <div id="chartContainerPie" style="height: 400px; width: 100%;"></div>
 <hr>
+<br> <br>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -219,8 +227,8 @@ chartPie.render();
                                 <th class= "text-center">Event Title</th>
                                 <th class= "text-center">Date</th>
                                 <th class= "text-center">Date of Event</th>
-                                <th class= "text-center">Min Age</th>
-                                <th class= "text-center">Max Age</th>
+                                <th class= "text-center">Age Range</th>
+                                <!-- <th class= "text-center">Max Age</th> -->
                                 <th class= "text-center">Text</th>
                             </tr>
                         </thread>
