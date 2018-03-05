@@ -257,7 +257,7 @@ class EventController extends Controller
 
             });
 
-            return view('events.show', compact('event'));
+            return redirect('/events');
 
 
         }
