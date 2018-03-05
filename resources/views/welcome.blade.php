@@ -57,8 +57,8 @@ function setPos(position){
           <input type="radio" name="location" value="default" checked="checked">Use my default location
         </label>
 @endif -->
-        <label class="radio-inline">
-          <input type="radio" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location
+        <label class="checkbox-inline">
+          <input type="checkbox" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location
         </label>
 
         <div class="form-group">

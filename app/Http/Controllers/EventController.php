@@ -40,7 +40,6 @@ class EventController extends Controller
 
     public function search(Request $request)
     {
-        $location = request('location');
         $zoom=15;
         if (request('radius'))
         $radius = request('radius');
@@ -48,7 +47,7 @@ class EventController extends Controller
         else
         $radius = 5;
 
-        if (request('lat')){
+        if (request('location')){
             $latlng = [
                 'lat' => request('lat'),
                 'lng' => request('lng')
