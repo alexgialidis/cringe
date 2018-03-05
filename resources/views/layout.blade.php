@@ -162,6 +162,10 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ url('/events/stats') }}">
+                            My Stats
+                        </a>
+                        <li>
                             <a href="{{ url('/provider/logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">

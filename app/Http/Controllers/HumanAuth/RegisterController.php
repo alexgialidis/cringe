@@ -67,7 +67,8 @@ class RegisterController extends Controller
     {
         $key = 'AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo';
 
-        $search = implode(', ', [$data['address'], $data['number'], $data['zip']]);
+        // $search = implode(', ', [$data['address'], $data['number'], $data['zip']]);
+        $search = implode(', ', [$data['address'], $data['number'], $data['zip'], "Greece"]);
 
         $geoData = google_maps_search($search, $key);
 

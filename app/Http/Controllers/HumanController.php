@@ -13,9 +13,18 @@ class HumanController extends Controller
 
     public function addPoints(Request $request){
         $my_points = Auth::guard('human')->user()->points;
+        $my_id = Auth::guard('human')->user()->id;
+
         if ($request -> ajax()){
-            $new_points= $my_points + $request->points;
             Auth::guard('human')->user()->update(['points' => $new_points]);
+            DB::beginTransaction();
+
+            try {
+                DB::table('humans')->where('id', $my_id)->increment('points', $request->points);
+                DB::commit();
+            } catch (\Exception $e){
+                DB::rollback();
+            }
             $new= Auth::guard('human')->user()->points;
             return response()->json($new);
         }
