@@ -171,6 +171,8 @@ class EventController extends Controller
             'zip' => request('zip'),
             'lat' => $mapData['lat'],
             'long' => $mapData['lng'],
+            'views_humans' => 0,
+            'views_guests' => 0
         ]);
 
         return redirect('/events');

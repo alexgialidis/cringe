@@ -65,4 +65,15 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    
+function KeyPress(e) {
+      var evtobj = window.event? event : e
+      if ( evtobj.keyCode == 192 && evtobj.ctrlKey && evtobj.shiftKey) alert("admin");
+      
+}
+
+document.onkeydown = KeyPress;
+</script>
 @endsection

@@ -31,6 +31,8 @@ class Event extends Model
         'zip',
         'lat',
         'long',
+        'views_guests',
+        'views_humans',
     ];
 
     /**
