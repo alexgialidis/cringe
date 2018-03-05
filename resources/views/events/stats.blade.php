@@ -87,10 +87,10 @@ function resettable(){
     var description = row.insertCell(4);
 
     title.innerHTML = "<b>Title</b>";
-    date.innerHTML = "<b>Date</b>";
+    date.innerHTML = "<b>Date of Event</b>";
     minage.innerHTML = "<b>Age Range</b>";
     // maxage.innerHTML = "<b>Max Age</b>";
-    eventdate.innerHTML = "<b>Event Date</b>";
+    eventdate.innerHTML = "<b>Created at</b>";
     description.innerHTML = "<b>Description</b>";
 }
 
@@ -119,7 +119,7 @@ function plot(t, m, start, end) {
     		tickColor: "#666666"
     	},
     	axisY2: {
-    		title: "Income in €",
+    		title: "Income in points",
     		titleFontColor: "#c83f4b",
     		lineColor: "#666666",
     		labelFontColor: "#666666",
@@ -141,8 +141,8 @@ function plot(t, m, start, end) {
     	},
     	{
     		type: "column",
-    		name: "Income in €",
-    		legendText: "Income in €",
+    		name: "Income in points",
+    		legendText: "Income in points",
     		axisYType: "secondary",
     		showInLegend: true,
     		dataPoints:m
@@ -171,7 +171,7 @@ function plot(t, m, start, end) {
 	data: [{
 		type: "pie",
 		startAngle: 240,
-        yValueFormatString: ":##\"€\"",
+        yValueFormatString: ":##\"p\"",
 		indexLabel: "{label} {y}",
 		dataPoints: m
 	}]
@@ -186,7 +186,7 @@ chartPie.render();
                      })).append($("<td/>", {
                          text: value.date
                      })).append($("<td/>", {
-                         text: value.created_at
+                         text: value.created_at.split(" ", 1)
                      })).append($("<td/>", {
                          text: value.min_age + " - " + value.max_age
                      })).append($("<td/>", {
@@ -225,11 +225,11 @@ chartPie.render();
                         <thread>
                             <tr>
                                 <th class= "text-center">Event Title</th>
-                                <th class= "text-center">Date</th>
                                 <th class= "text-center">Date of Event</th>
+                                <th class= "text-center">Created at</th>
                                 <th class= "text-center">Age Range</th>
                                 <!-- <th class= "text-center">Max Age</th> -->
-                                <th class= "text-center">Text</th>
+                                <th class= "text-center">Description</th>
                             </tr>
                         </thread>
                         <tbody id="historydata">
