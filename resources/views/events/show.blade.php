@@ -26,12 +26,21 @@
 										<td>{{ $event['date'] }}</td>
 									</tr>
 									<tr>
+										<td>Age Range</td>
+										<td>{{ $event['min_age'].' - '.$event['max_age'] }}</td>
+									</tr>
+									<tr>
+										<td>Availability</td>
+										<td>{{ $event['availability'] }}</td>
+									</tr>
+									<tr>
 										<td>Price</td>
 										<td>{{ $event['price'] }} points</td>
 									</tr>
 									<tr>
-										<td>Availability</td>
-										<td>{{ $event['availability'] - $event['sold'] }}</td>
+									<tr>
+										<td>Address</td>
+										<td>{{ $event['address'].' '.$event['number'].', '.$event['city'] }}</td>
 									</tr>
 									<tr>
 										<td>Description</td>
