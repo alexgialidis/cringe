@@ -29,8 +29,10 @@ class CreateEventsTable extends Migration
             $table->string('address');
             $table->string('number');
             $table->string('zip');
-            $table->decimal('lat', 9, 6); 
+            $table->decimal('lat', 9, 6);
             $table->decimal('long', 9, 6);
+            $table->integer('views_guests');
+            $table->integer('views_humans');
             $table->timestamps();
         });
     }
