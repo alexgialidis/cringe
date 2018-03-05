@@ -233,6 +233,11 @@ class EventController extends Controller
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
+                DB::table('tickets')->insert([
+                    'human_id' => Auth::guard('human')->user()->id, 
+                    'event_id' => $event->id,
+                    'provider_id' => $event->provider_id
+                ]);
 
                 DB::commit();
 
@@ -241,7 +246,7 @@ class EventController extends Controller
                 return view('error', ['string' => $e->getMessage()]);
             }
 
-
+            
 
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdf.invoice', $data);
