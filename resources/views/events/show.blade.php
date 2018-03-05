@@ -30,10 +30,13 @@
 										<td>{{ $event['price'] }} points</td>
 									</tr>
 									<tr>
-										<td>Description</td>
-										<td>{{ $event['description'] }} points</td>
+										<td>Availability</td>
+										<td>{{ $event['availability'] - $event['sold'] }}</td>
 									</tr>
-
+									<tr>
+										<td>Description</td>
+										<td>{{ $event['description'] }}</td>
+									</tr>
 								</tbody>
 							</table>
 
@@ -49,6 +52,8 @@
 
 @if (Auth::guard('human')->user())
 	<button type="link" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">Get a Ticket</button>
+@elseif (Auth::guard('provider')->user())
+
 @else
 	<form action="/human/login">
 		<button type="link" class="btn btn-primary btn-lg center-block">Buy Ticket</button>
