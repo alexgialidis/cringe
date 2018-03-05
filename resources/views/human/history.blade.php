@@ -6,9 +6,9 @@
 <div class="row">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h4>
-        Fixed Header Scrolling Table
-      </h4>
+      <h2>
+        Tickets
+    </h2>
     </div>
     <table class="table table-fixed">
       <thead>

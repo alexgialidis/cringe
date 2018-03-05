@@ -147,7 +147,7 @@ function resetCenter(id){
         </label>
 @endif -->
         <!-- <label class="radio-inline "> -->
-       
+
         <input type="checkbox" name="location" value="new" id= "new" onclick="getLoc()">Use my current location
         <!-- </label> -->
 
@@ -173,12 +173,11 @@ function resetCenter(id){
                 @foreach ($events as $event)
                 <button type="button" class="btn btn-default list-group-item list-group-item-action flex-column align-items-start" onclick="resetCenter({{$event['id']}})">
                     <div class="">
-                        <h2><a target="_blank" href="/events/{{ $event['id'] }}" style="font-weight:1000; color:black" >{{ $event['title'] }}</a></h2>
+                        <h2><a target="_blank" href="/events/{{ $event['id'] }}" style="font-weight:1000; color:black" >{{ $event['title'] }}</a> <p class= "pull-right">{{ $event['price'] }} p</p></h2>
                         <p> <?php
                         $desc = substr($event['description'], 0, 40);
                         echo $desc;
                         ?>
-
                     </div>
                 </button>
                 <script type="text/javascript">
@@ -228,29 +227,6 @@ $(document).on('click','body',function(){
 
     }
 });
-var checked;
-$(document).ready(function() {
-    if ( {{ $zoom }} == 15)  {
-        $("#new").prop("checked", true);
-        document.getElementById("lat").value= {{ $latlng['lat'] }}
-        document.getElementById("lng").value={{ $latlng['lng'] }}
-        checked=1;
-    }
-    else{
-        checked=0;  // unchecked by default
-    }
-});
-function check(){
-    if (checked==1){
-        document.getElementById("lat").value= "";
-        //tote egine unchecked
-        document.getElementById("lng").value= "";
-    }
-    else {
-        document.getElementById("lat").value= {{ $latlng['lat'] }}
-        document.getElementById("lng").value={{ $latlng['lng'] }}
-    }
-}
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @endsection

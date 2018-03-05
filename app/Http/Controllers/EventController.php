@@ -185,7 +185,12 @@ class EventController extends Controller
     */
     public function show(Event $event)
     {
-        return view('events.show', compact('event'));
+        $flag=1;
+        $today = date("Y-m-d");
+        if($today > $event['date']){
+            $flag=0;
+        }
+        return view('events.show', compact('event', 'flag'));
     }
 
     public function stats()
@@ -233,7 +238,7 @@ class EventController extends Controller
                 throw new Exception("Not Enough Points");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
-                DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', $event->price);
+                DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', 0.97*$event->price);
                 DB::table('tickets')->insert([
                     'human_id' => Auth::guard('human')->user()->id,
                     'event_id' => $event->id,
@@ -263,7 +268,7 @@ class EventController extends Controller
 
             });
 
-            return redirect('/events');
+            return redirect('/human/history');
 
 
         }
@@ -275,6 +280,8 @@ class EventController extends Controller
         $tickets = DB::table('tickets')
                     ->join('humans', 'humans.id', '=', 'tickets.human_id')
                     ->where('event_id', $event['id'])
+                    ->select('name','surname','email', DB::raw('count(*) as total'))
+                    ->groupBy('tickets.human_id')
                     ->get();
 
         $tickets = json_decode($tickets, true);

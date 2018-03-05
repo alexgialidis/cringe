@@ -59,16 +59,17 @@
 	</div>
 </div>
 
-@if (Auth::guard('human')->user())
-	<button type="link" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">Get a Ticket</button>
-@elseif (Auth::guard('provider')->user())
+@if($flag)
+	@if (Auth::guard('human')->user())
+		<button type="link" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">Get a Ticket</button>
+	@elseif (Auth::guard('provider')->user())
 
-@else
-	<form action="/human/login">
-		<button type="link" class="btn btn-primary btn-lg center-block">Buy Ticket</button>
-	</form>
+	@else
+		<form action="/human/login">
+			<button type="link" class="btn btn-primary btn-lg center-block">Get a Ticket</button>
+		</form>
+	@endif
 @endif
-
 <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -83,6 +84,7 @@
           <p id ="line1"></p>
 		  <p id= "line2"></p>
 		  <p id= "line3"></p>
+		  <p id= "line4"></p>
         </div>
         <div class="modal-footer">
 			<form action="/events/{{ $event['id'] }}/buy">
@@ -114,13 +116,15 @@ $('#myModal').on('shown.bs.modal', function (e) {
 		document.getElementById("proceed").disabled = true;
 	}
 	else{
-		var total= parseFloat({{ Auth::guard('human')->user()->points }}) - parseFloat({{ $event['price'] }});
+		var total= parseFloat({{ Auth::guard('human')->user()->points }}).toFixed(2) - 0.97*parseFloat({{ $event['price'] }}).toFixed(2);
 		line1.innerHTML="Your Points: {{ Auth::guard('human')->user()->points }}";
 		line2.innerHTML= "Price: - {{ $event['price'] }} ";
-		line3.innerHTML= "New Total: " + total;
+		line3.innerHTML= "New Total: " + total.toFixed(2);
+		line4.innerHTML= "Bonus: " + 0.03 * parseFloat({{ $event ['price']}}).toFixed(2);
 		line1.style.color = "green";
 		line2.style.color = "red";
 		line3.style.color = "blue";
+		line4.style.color = "green";
 
 	}
 
