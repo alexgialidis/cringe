@@ -268,7 +268,7 @@ class EventController extends Controller
 
             });
 
-            return redirect('/events');
+            return redirect('/human/history');
 
 
         }
