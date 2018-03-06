@@ -60,10 +60,13 @@
     </div>
 </div>
 
+@if ({{ Auth::guard('provider')->user()->lock }}== "0")
 <form action="/events/create">
 <button type="link" class="btn btn-primary btn-lg center-block">Create Event</button>
 </form>
-
+@else
+    <p><strong>You are locked. Contact with cringeTeam.</strong></p>
+@endif
 
 
 @endsection

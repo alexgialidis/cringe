@@ -22,6 +22,7 @@
     }
 
     html, body {
+        position: relative;
         padding-top: 40px;
         padding-bottom: 60px;
         background-color: #fff;

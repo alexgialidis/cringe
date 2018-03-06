@@ -140,6 +140,9 @@ class EventController extends Controller
     */
     public function store(Request $request)
     {
+        if($request->user('provider')->lock){
+            return view('error', ['string' => "You are blocked by the Admin. Sorry."])
+        }
         //dd($request()->all());
 
         //$key = 'AIzaSyDyyd0zM6OUe4PflYQ1_BD-feq3omU9zK0';
@@ -241,9 +244,11 @@ class EventController extends Controller
 
             try {
                 if ($event->availability <= 0)
-                throw new Exception("No available Tickets");
+                    throw new Exception("No available Tickets");
                 elseif (Auth::guard('human')->user()->points - 0.97*$event->price < 0)
-                throw new Exception("Not Enough Points");
+                    throw new Exception("Not Enough Points");
+                elseif (Auth::guard('human')->user()->lock)
+                    throw new Exception("You are locked by the Admin. Sorry.");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', 0.97*$event->price);
