@@ -242,7 +242,7 @@ class EventController extends Controller
             try {
                 if ($event->availability <= 0)
                 throw new Exception("No available Tickets");
-                elseif (Auth::guard('human')->user()->points - $event->price < 0)
+                elseif (Auth::guard('human')->user()->points - 0.97*$event->price < 0)
                 throw new Exception("Not Enough Points");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
