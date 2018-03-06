@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Provider Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/provider/login') }}">
                         {{ csrf_field() }}
@@ -65,4 +65,15 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+function KeyPress(e) {
+      var evtobj = window.event? event : e
+      if ( evtobj.keyCode == 192 && evtobj.ctrlKey && evtobj.shiftKey)
+            window.location.href = "/admin/login";
+}
+
+document.onkeydown = KeyPress;
+</script>
 @endsection

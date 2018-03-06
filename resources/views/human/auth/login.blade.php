@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Parent Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/human/login') }}">
                         {{ csrf_field() }}
@@ -67,11 +67,11 @@
 </div>
 
 <script type="text/javascript">
-    
+
 function KeyPress(e) {
       var evtobj = window.event? event : e
-      if ( evtobj.keyCode == 192 && evtobj.ctrlKey && evtobj.shiftKey) alert("admin");
-      
+      if ( evtobj.keyCode == 192 && evtobj.ctrlKey && evtobj.shiftKey)
+            window.location.href = "/admin/login";
 }
 
 document.onkeydown = KeyPress;
