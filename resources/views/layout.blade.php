@@ -144,7 +144,7 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <li class=""><a href="/">Home</a></li>
-                    <li><a href="/events">Events</a></li>
+                    <li><a href="/events">All Events</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -266,7 +266,7 @@
         <div class="col-lg-10 col-lg-offset-1">
             <ul class="nav nav-justified">
                 <li>
-                  <p>Contact us: <a href="mailto:cringeteam@contactus.gr">Cringe Team</a></p>
+                  <p>Contact us: <a href="mailto:cringeTeam@contact.com">Cringe Team</a></p>
                 </li>
                 <li><p>2018 Cringe &trade;</p></li>
             </ul>
