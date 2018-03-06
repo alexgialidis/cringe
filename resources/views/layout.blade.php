@@ -261,13 +261,14 @@
 
 
 
-<div class="container text-center" style="position: fixed; bottom: 0; width: 100%; background-color: #ffffff;">
-    <div class="row-fluid">
+<div class="container text-center" style="padding-top: 5px; opacity: 0.75; position: fixed; bottom: 0; height: 30px; width: 100%; background-color: #d3d3d3;">
+    <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <ul class="nav nav-justified">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Contact us</a></li>
-                <li><a href="/">© 2018 Cringe</a></li>
+                <li>
+                  <p>Contact us: <a href="mailto:cringeteam@contactus.gr">Cringe Team</a></p>
+                </li>
+                <li><p>2018 Cringe &trade;</p></li>
             </ul>
         </div>
     </div>

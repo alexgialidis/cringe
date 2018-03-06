@@ -47,7 +47,7 @@ class EventController extends Controller
         else
         $radius = 5;
 
-        if (request('lat')){
+        if (request('lat') && request('location')){
             $latlng = [
                 'lat' => request('lat'),
                 'lng' => request('lng')

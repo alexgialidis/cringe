@@ -5,18 +5,29 @@
 <script type="text/javascript">
 
 function getLoc(){
-    if (navigator.geolocation) {
+      if (navigator.geolocation && $('#new').is(':checked')){
         navigator.geolocation.getCurrentPosition(setPos);
     } else {
         //document.getElementById("new").style.color = "red";
+        document.getElementById("lat").value = '';
+        document.getElementById("lng").value = '';
+        document.getElementById("ok").style.display = "none";
     }
 }
 
 function setPos(position){
     document.getElementById("lat").value = position.coords.latitude;
     document.getElementById("lng").value = position.coords.longitude;
+    document.getElementById("ok").style = "block";
+
     //alert(document.getElementById("lat").value + "," + document.getElementById("lng").value);
 }
+// A $( document ).ready() block.
+$( document ).ready(function() {
+  document.getElementById("new").checked = false;
+  document.getElementById("lat").value = '';
+  document.getElementById("lng").value = '';
+});
 </script>
 
 
@@ -58,7 +69,8 @@ function setPos(position){
         </label>
 @endif -->
         <label class="checkbox-inline">
-          <input type="checkbox" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location
+          <input type="checkbox" name="location" value="new" id= "new" onclick= "getLoc()" >Use my current location</input>
+          <span class="glyphicon glyphicon-ok" id="ok" style="display:none;"></span>
         </label>
 
         <div class="form-group">

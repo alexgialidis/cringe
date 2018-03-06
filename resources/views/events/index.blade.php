@@ -153,10 +153,9 @@ function resetCenter(id){
           <input type="radio" name="location" value="default" checked="checked">Use my default location
         </label>
 @endif -->
-         <label class="radio-inline ">
-
-        <input type="checkbox" name="location" value="new" id= "new" value= "false" onclick="getLoc()">Use my current location</input>
-        <span class="glyphicon glyphicon-ok" id="ok" style="display:none;"></span>
+        <label class="checkbox-inline">
+          <input type="checkbox" name="location" value="new" id= "new" value= "false" onclick="getLoc()">Use my current location</input>
+          <span class="glyphicon glyphicon-ok" id="ok" style="display:none;"></span>
         </label>
 
         <div class="form-group">
