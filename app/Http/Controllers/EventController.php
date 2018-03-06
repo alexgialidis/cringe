@@ -141,7 +141,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         if($request->user('provider')->lock){
-            return view('error', ['string' => "You are blocked by the Admin. Sorry."])
+            return view('error', ['string' => "You are blocked by the Admin. Sorry."]);
         }
         //dd($request()->all());
 
@@ -226,11 +226,11 @@ class EventController extends Controller
     public function buy(Event $event)
     {
 
-        if (Auth::guard('human')->user()->lock) {
-            return view('events.show', compact('event'));
-        }
+        // if (Auth::guard('human')->user()->lock) {
+        //     return view('events.show', compact('event'));
+        // }
 
-        else{
+
             $data = [
                 'name' => Auth::guard('human')->user()->name,
                 'event' => $event,
@@ -284,7 +284,7 @@ class EventController extends Controller
             return redirect('/human/history');
 
 
-        }
+        
     }
 
     public function history(Event $event)

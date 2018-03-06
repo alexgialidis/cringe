@@ -59,7 +59,7 @@
 	</div>
 </div>
 
-@if($flag)
+@if($flag=="1")
 	@if (Auth::guard('human')->user())
 		<button type="link" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">Get a Ticket</button>
 	@elseif (Auth::guard('provider')->user())
