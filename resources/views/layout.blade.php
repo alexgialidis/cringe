@@ -23,6 +23,7 @@
 
     html, body {
         padding-top: 40px;
+        padding-bottom: 60px;
         background-color: #fff;
         color: black;
         font-family: 'Raleway', sans-serif;
@@ -257,6 +258,21 @@
 
 
 @yield('content')
+
+
+
+<div class="container text-center" style="padding-top: 5px; opacity: 0.75; position: fixed; bottom: 0; height: 30px; width: 100%; background-color: #d3d3d3;">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <ul class="nav nav-justified">
+                <li>
+                  <p>Contact us: <a href="mailto:cringeteam@contactus.gr">Cringe Team</a></p>
+                </li>
+                <li><p>2018 Cringe &trade;</p></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
