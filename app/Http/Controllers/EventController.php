@@ -192,6 +192,11 @@ class EventController extends Controller
         if($today > $event['date']){
             $flag=0;
         }
+        if (Auth::guard('human')->user()){
+            Event::where('id', $event->id)->increment('views_humans');
+        }else {
+            Event::where('id', $event->id)->increment('views_guests');
+        }
         return view('events.show', compact('event', 'flag'));
     }
 
@@ -199,6 +204,7 @@ class EventController extends Controller
     {
         $my_id = Auth::guard('provider')->user()->id;
         $events = Event::where('provider_id', $my_id)->get();
+
         return view('events.stats', compact('events'));
     }
 

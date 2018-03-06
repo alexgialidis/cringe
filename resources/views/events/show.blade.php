@@ -120,7 +120,7 @@ $('#myModal').on('shown.bs.modal', function (e) {
 		line1.innerHTML="Your Points: {{ Auth::guard('human')->user()->points }}";
 		line2.innerHTML= "Price: - {{ $event['price'] }} ";
 		line3.innerHTML= "New Total: " + total.toFixed(2);
-		line4.innerHTML= "Bonus: " + 0.03 * parseFloat({{ $event ['price']}}).toFixed(2);
+		line4.innerHTML= "Bonus: " + (0.03 * parseFloat({{ $event ['price']}})).toFixed(2);
 		line1.style.color = "green";
 		line2.style.color = "red";
 		line3.style.color = "blue";
