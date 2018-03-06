@@ -6,16 +6,22 @@
 <script>
 
 function getLoc(){
-    if (navigator.geolocation) {
+    if (navigator.geolocation && $('#new').is(':checked')) {
+
         navigator.geolocation.getCurrentPosition(setPos);
     } else {
-        //document.getElementById("new").style.color = "red";
+        //alert("aaa");
+        document.getElementById("lat").value = '';
+        document.getElementById("lng").value = '';
+        document.getElementById("ok").style.display = "none";
     }
 }
 
 function setPos(position){
+    //alert("aaaaaa");
     document.getElementById("lat").value = position.coords.latitude;
     document.getElementById("lng").value = position.coords.longitude;
+    document.getElementById("ok").style = "block";
     //alert(document.getElementById("lat").value + "," + document.getElementById("lng").value);
 }
 
@@ -29,6 +35,7 @@ function storeCoord(id, lat, lng, title, descr){
 }
 
 function initMap() {
+    document.getElementById("new").checked = false;
     var initPos= {lat: {{ $latlng['lat'] }}, lng: {{ $latlng['lng'] }}};
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
@@ -146,8 +153,10 @@ function resetCenter(id){
           <input type="radio" name="location" value="default" checked="checked">Use my default location
         </label>
 @endif -->
-        <label class="checkbox-inline ">
-          <input type="checkbox" name="location" value="new" id= "new" onclick="getLoc()">Use my current location
+         <label class="radio-inline ">
+
+        <input type="checkbox" name="location" value="new" id= "new" value= "false" onclick="getLoc()">Use my current location</input>
+        <span class="glyphicon glyphicon-ok" id="ok" style="display:none;"></span>
         </label>
 
         <div class="form-group">
@@ -216,6 +225,7 @@ function resetCenter(id){
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo&callback=initMap">
 </script>
 <script type="text/javascript">
+
 $(document).on('click','body',function(){
     //alert(document.activeElement.tagName);
     if (document.activeElement.tagName == "INPUT"){

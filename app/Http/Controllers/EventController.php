@@ -47,11 +47,12 @@ class EventController extends Controller
         else
         $radius = 5;
 
-        if (request('location') && request('lat')){
+        if (request('lat')){
             $latlng = [
                 'lat' => request('lat'),
                 'lng' => request('lng')
             ];
+            //dd( request('location'));
         }elseif(Auth::guard('human')->user()) {
             $latlng = [
                 'lat' => Auth::guard('human')->user()->lat,
@@ -191,6 +192,11 @@ class EventController extends Controller
         if($today > $event['date']){
             $flag=0;
         }
+        if (Auth::guard('human')->user()){
+            Event::where('id', $event->id)->increment('views_humans');
+        }else {
+            Event::where('id', $event->id)->increment('views_guests');
+        }
         return view('events.show', compact('event', 'flag'));
     }
 
@@ -198,6 +204,7 @@ class EventController extends Controller
     {
         $my_id = Auth::guard('provider')->user()->id;
         $events = Event::where('provider_id', $my_id)->get();
+
         return view('events.stats', compact('events'));
     }
 
@@ -235,7 +242,7 @@ class EventController extends Controller
             try {
                 if ($event->availability <= 0)
                 throw new Exception("No available Tickets");
-                elseif (Auth::guard('human')->user()->points - $event->price < 0)
+                elseif (Auth::guard('human')->user()->points - 0.97*$event->price < 0)
                 throw new Exception("Not Enough Points");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
