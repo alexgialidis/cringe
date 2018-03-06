@@ -141,7 +141,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
         if($request->user('provider')->lock){
-            return view('error', ['string' => "You are blocked by the Admin. Sorry."]);
+            return view('error', ['string' => "Hmm you are sneaky... But you are blocked by the Admin. Sorry."]);
         }
         //dd($request()->all());
 
@@ -248,7 +248,7 @@ class EventController extends Controller
                 elseif (Auth::guard('human')->user()->points - 0.97*$event->price < 0)
                     throw new Exception("Not Enough Points");
                 elseif (Auth::guard('human')->user()->lock)
-                    throw new Exception("You are locked by the Admin. Sorry.");
+                    throw new Exception("Hmm you are sneaky... But you still are locked by the Admin. Sorry.");
                 DB::table('events')->where('id', $event->id)->decrement('availability');
                 DB::table('events')->where('id', $event->id)->increment('sold');
                 DB::table('humans')->where('id', Auth::guard('human')->user()->id)->decrement('points', 0.97*$event->price);
@@ -284,7 +284,7 @@ class EventController extends Controller
             return redirect('/human/history');
 
 
-        
+
     }
 
     public function history(Event $event)
