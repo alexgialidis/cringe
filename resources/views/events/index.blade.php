@@ -201,6 +201,7 @@ function resetCenter(id){
                 <div class="affix col-md-11">
            <div id="map" class="col-md-6" style="height:70vh" >
            </div>
+
             </div>
 
     </div>
@@ -208,7 +209,11 @@ function resetCenter(id){
     </div>
 </div>
 </div>
-
+<div style="position:fixed; bottom:7%; right:3%;">
+    <button type="button" name="top" onclick= "goTop()" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-up"></span>
+    </button>
+</div>
 <style media="screen">
 
 @media only screen and (max-width: 900px) {
@@ -220,12 +225,16 @@ function resetCenter(id){
 }
 }
 
+
 </style>
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDExc4GNJctRKQDUNuYvUm6CtUVXid8eVo&callback=initMap">
 </script>
 <script type="text/javascript">
-
+function goTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
 $(document).on('click','body',function(){
     //alert(document.activeElement.tagName);
     if (document.activeElement.tagName == "INPUT"){

@@ -19,7 +19,7 @@
 							<label for="title" class="col-md-4 col-form-label text-md-right">Title</label>
 
 							<div class="col-md-6">
-								<input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}"  autofocus>
+								<input id="title" type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title" value="{{ old('title') }}"  autofocus required>
 
 								@if ($errors->has('title'))
 								<span class="invalid-feedback">
@@ -33,7 +33,7 @@
 							<label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
 
 							<div class="col-md-6">
-								<textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') }}"></textarea> 
+								<textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" value="{{ old('description') }}" required></textarea> 
 
 								@if ($errors->has('description'))
 								<span class="invalid-feedback">
@@ -47,7 +47,7 @@
 							<label for="category" class="col-md-4 col-form-label text-md-right">Category</label>
 
 							<div class="col-md-6">
-								<input id="category" type="text" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}" name="category" value="{{ old('category') }}" >
+								<input id="category" type="text" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}" name="category" value="{{ old('category') }}"  required>
 
 								@if ($errors->has('category'))
 								<span class="invalid-feedback">
@@ -61,7 +61,7 @@
 							<label for="date" class="col-md-4 col-form-label text-md-right">Date</label>
 
 							<div class="col-md-6">
-								<input id="date" type="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" >
+								<input id="date" type="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}"  required>
 
 								@if ($errors->has('date'))
 								<span class="invalid-feedback">
@@ -75,7 +75,7 @@
 							<label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
 
 							<div class="col-md-6">
-								<input id="price" type="integer" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" >
+								<input id="price" type="integer" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}"  required>
 
 								@if ($errors->has('price'))
 								<span class="invalid-feedback">
@@ -91,7 +91,7 @@
 							<label for="ages" class="col-md-4 col-form-label text-md-right">Age Range</label>
 
 							<div class="col-md-6">
-								<input id="ages" type="text" class="form-control{{ $errors->has('ages') ? ' is-invalid' : '' }}" name="ages" >
+								<input id="ages" type="text" class="form-control{{ $errors->has('ages') ? ' is-invalid' : '' }}" name="ages"  required>
 								<small>E.g. 3-10</small>
 
 								@if ($errors->has('ages'))
@@ -106,7 +106,7 @@
 							<label for="availability" class="col-md-4 col-form-label text-md-right">Availability</label>
 
 							<div class="col-md-6">
-								<input id="availability" type="number" class="form-control{{ $errors->has('availability') ? ' is-invalid' : '' }}" name="availability" value="{{ old('availability') }}" >
+								<input id="availability" type="number" class="form-control{{ $errors->has('availability') ? ' is-invalid' : '' }}" name="availability" value="{{ old('availability') }}"  required>
 
 								@if ($errors->has('availability'))
 								<span class="invalid-feedback">
@@ -121,7 +121,7 @@
 							<label for="city" class="col-md-4 col-form-label text-md-right">City</label>
 
 							<div class="col-md-6">
-								<input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" >
+								<input id="city" type="text" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}"  required>
 
 								@if ($errors->has('city'))
 								<span class="invalid-feedback">
@@ -135,7 +135,7 @@
 							<label for="address" class="col-md-4 col-form-label text-md-right">Address</label>
 
 							<div class="col-md-6">
-								<input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" >
+								<input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}"  required>
 
 								@if ($errors->has('address'))
 								<span class="invalid-feedback">
@@ -149,7 +149,7 @@
 							<label for="number" class="col-md-4 col-form-label text-md-right">Number</label>
 
 							<div class="col-md-6">
-								<input id="number" type="number" class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" name="number" value="{{ old('number') }}" >
+								<input id="number" type="number" class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" name="number" value="{{ old('number') }}"  required>
 
 								@if ($errors->has('number'))
 								<span class="invalid-feedback">
@@ -163,7 +163,7 @@
 							<label for="zip" class="col-md-4 col-form-label text-md-right">Zip Code</label>
 
 							<div class="col-md-6">
-								<input id="zip" type="text" class="form-control{{ $errors->has('zip') ? ' is-invalid' : '' }}" name="zip" value="{{ old('zip') }}" >
+								<input id="zip" type="text" class="form-control{{ $errors->has('zip') ? ' is-invalid' : '' }}" name="zip" value="{{ old('zip') }}"  required>
 
 								@if ($errors->has('zip'))
 								<span class="invalid-feedback">
