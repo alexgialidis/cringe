@@ -26,7 +26,7 @@
             <td class="col-xs-2">{{ $index }}</td><td class="col-xs-4">
                 <a href= "/events/{{ $ticket['event_id'] }}">
                 {{ $ticket['title'] }}</td><a>
-                <td class="col-xs-4">{{ $ticket['date'] }}</td><td class="col-xs-4">{{ $ticket['price'] }}</td><td class="col-xs-2">{{ $ticket['total'] }}</td><th class="col-xs-4">{{$total}}</th>
+                <td class="col-xs-4">{{ $ticket['date'] }}</td><td class="col-xs-4">{{ $ticket['price'] }}</td><td class="col-xs-2">{{ $ticket['total'] }}</td><th class="col-xs-4">{{$total}}p</th>
           </tr>
           @endforeach
       </tbody>

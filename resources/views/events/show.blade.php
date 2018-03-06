@@ -105,7 +105,7 @@ var line3= document.getElementById("line3");
 
 $('#myModal').on('shown.bs.modal', function (e) {
 	if ({{ Auth::guard('human')->user()->lock }}== "1"){
-		line1.innerHTML= "<span class='glyphicon glyphicon-lock'></span> Hm... You have locked by Admin!!! "
+		line1.innerHTML= "<span class='glyphicon glyphicon-lock'></span> Hm... You have been locked by the Admin!!! "
 		line2.innerHTML= "Contact with cringeTeam@contact.com for more details"
 		document.getElementById("proceed").disabled = true;
 	}
