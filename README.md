@@ -9,8 +9,4 @@
   
   Ζαφειρίδης Γεώργιος     03113906  g.zafiridis@gmail.com
   
-  Μουρατίδης Σταύρος      03112908  stavros.mouratidis12@gmail.com
-  
-  Παπαβασιλείου Ευάγελλος 03113109  el13109@central.ntua.gr
-  
   Φιλανδριανός Γεώργιος   03113557  geofila@outlook.com.gr
